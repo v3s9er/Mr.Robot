@@ -1,28 +1,28 @@
 {
   "schema": "mr-robot-session-state/v3",
-  "createdAt": "2026-08-31T03:15:00.8045344+09:00",
+  "createdAt": "2026-08-31T06:11:31.7018148+09:00",
   "project": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot",
   "release": {
-    "version": "0.3.1",
+    "version": "0.3.2",
     "gitBranch": "main",
-    "gitTag": "v0.3.1",
+    "gitTag": "v0.3.2",
     "visibility": "public"
   },
-  "resumeObjective": "Iterate from the verified 0.3.1 desktop/mobile ecosystem; preserve security ceilings, token accounting, Android release-signing identity, and direct token-free device transfers.",
+  "resumeObjective": "Iterate from the security-audited 0.3.2 desktop/mobile ecosystem; preserve remote-connection security ceilings, token accounting, Android release-signing identity, and direct token-free device transfers.",
   "status": {
     "typecheck": "passed: shared, agent, web, mobile",
     "build": "passed: shared, agent, web, Electron NSIS, Android release",
     "tests": "passed: smoke, core-hardening, storage-recovery, executable QR-security, plugin-execution-security, provider-security, scheduler, AI-loop, dependencies, routing, CLI, v0.2 compatibility, UI contract (51 RPC), logger, voice",
     "leakTest": {
       "result": "passed: no leak detected",
-      "pluginBatch1KiB": 334,
-      "pluginBatch2KiB": 81,
+      "pluginBatch1KiB": 335,
+      "pluginBatch2KiB": 73,
       "webSocketBatch1KiB": 850,
       "webSocketBatch2KiB": 43,
-      "totalDriftKiB": 1340
+      "totalDriftKiB": 1332
     },
-    "browserQa": "passed with zero new console errors: 1280x720, 1024x600, 800x600 and 430x800 workflows",
-    "npmAudit": "passed: root and mobile production audits report 0 vulnerabilities",
+    "browserQa": "0.3.1 responsive matrix retained; 0.3.2 focused Remote Link and desktop IPC UI contracts passed",
+    "npmAudit": "passed: root full/production and mobile production audits report 0 vulnerabilities",
     "licenseAudit": "passed: 635 production packages, deterministic notices embedded in Electron and APK",
     "expo": "passed: final config and production export",
     "installerBuild": "passed: Electron NSIS with generated Mr.Robot icon",
@@ -32,18 +32,18 @@
   },
   "artifacts": {
     "installer": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.1-x64.exe",
-      "sizeBytes": 97775926,
-      "sha256": "D6967E6341850C751171EA06D0E9F538ADC5D688E8A4B601B6D0794688BEBBB2",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.2-x64.exe",
+      "sizeBytes": 97783858,
+      "sha256": "AFBDEC083B78E3C67507811AA4DA27D76F1D2585CB4225E8ED0C019BBB712932",
       "authenticode": "not-signed"
     },
     "androidApk": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.1.apk",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.2.apk",
       "sizeBytes": 87498916,
-      "sha256": "9D0426C0DC03AE8E6F9CF69D1632F175E3585529FF802BA8785DF33628E17057",
+      "sha256": "29285CEB01BEB556FF9FAC32D66368782CE5F476992C4097F6ABE06503604707",
       "package": "com.mrrobot.mobile",
-      "versionName": "0.3.1",
-      "versionCode": 6,
+      "versionName": "0.3.2",
+      "versionCode": 7,
       "targetSdk": 36,
       "signatureSchemeV2": true,
       "certificateSha256": "EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6"
@@ -56,7 +56,7 @@
       "embeddedInDesktop": true,
       "embeddedInApk": true
     },
-    "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.1",
+    "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.2",
     "runtimeConfig": "C:\\Users\\lrsze\\.mr-robot"
   },
   "completed": [
@@ -69,7 +69,8 @@
     "per-conversation run state, cancel, safe-boundary steering, terminal validation, and fallback",
     "pin, rename, archive, restore, delete, context menu, drag-and-drop, and multi-file workflows",
     "mobile keyboard avoidance, safe areas, reconnect, SecureStore, isolated runs, and transfer cancellation",
-    "loopback-first pairing plus opt-in HTTPS Cloudflare Quick Link without a required phone VPN; plaintext LAN credentials blocked",
+    "loopback-first pairing plus opt-in Cloudflare Quick Link or DPAPI-protected fixed named Tunnel without a required phone VPN; plaintext LAN credentials blocked",
+    "CSP/no-store public endpoint headers, public-host SSRF rejection, trusted desktop IPC sender checks, redirect-free origin+credential-bound downloads",
     "optional Tailscale plugin rather than a built-in dependency",
     "90-second single-use cross-PC capabilities with no long-lived source secret forwarding",
     "token-free direct file and work-state synchronization with limits and rollback",
@@ -94,13 +95,14 @@
     "crossPcGrantSingleUse": true
   },
   "knownExternalBoundaries": [
-    "Cloudflare Quick Link addresses are temporary; a stable endpoint requires a user-owned named tunnel or maintained relay/OAuth backend",
+    "Cloudflare Quick Link addresses are temporary; the named Tunnel is stable but requires a user-owned domain/token and a running PC, Mr.Robot and cloudflared",
+    "arbitrary custom public origins remain blocked for server-side PC-to-PC pull until peer identity is cryptographically pinned",
     "the Windows installer is not Authenticode-signed and may trigger SmartScreen",
     "physical-phone testing remains recommended for OEM background policies, camera pairing, keyboard behavior, and remote transfer",
     "Google Calendar cloud sync requires the user's OAuth client; local calendar and ICS do not",
     "Android builds older than 0.3.0 used a debug certificate and require one uninstall before installing the dedicated release-signed APK",
     "the Android release key must be preserved for future in-place updates and is not stored in Git",
-    "Windows React Native/NDK release builds require an ASCII-only checkout path; the published APK was built from an ASCII checkout",
+    "Windows React Native/NDK release builds require a short ASCII-only checkout path; the 0.3.2 APK was built from C:\\MR032",
     "an Orca worktree accepted before cancellation is not automatically deleted because it may contain user data",
     "quality-per-token routing improves efficiency but cannot guarantee universally best answers"
   ],
@@ -109,6 +111,9 @@
     "plaintextCredentialsInRepository": false,
     "longLivedSourceCredentialForwarding": false,
     "runtimeSecrets": "platform credential store or ~/.mr-robot only",
-    "perConversationAccessExceedsDeviceCeiling": false
+    "perConversationAccessExceedsDeviceCeiling": false,
+    "remoteAudit": "docs/SECURITY_AUDIT_0.3.2.md",
+    "tunnelTokenAtRest": "Windows DPAPI current user",
+    "windowsAuthenticode": "not configured; checksum verification required"
   }
 }
