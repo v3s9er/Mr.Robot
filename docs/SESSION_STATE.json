@@ -1,14 +1,14 @@
 {
   "schema": "mr-robot-session-state/v3",
-  "createdAt": "2026-08-31T02:36:05.5831214+09:00",
+  "createdAt": "2026-08-31T03:15:00.8045344+09:00",
   "project": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot",
   "release": {
-    "version": "0.3.0",
+    "version": "0.3.1",
     "gitBranch": "main",
-    "gitTag": "v0.3.0",
+    "gitTag": "v0.3.1",
     "visibility": "public"
   },
-  "resumeObjective": "Iterate from the verified 0.3.0 desktop/mobile ecosystem; preserve security ceilings, token accounting, release signing identity, and direct token-free device transfers.",
+  "resumeObjective": "Iterate from the verified 0.3.1 desktop/mobile ecosystem; preserve security ceilings, token accounting, Android release-signing identity, and direct token-free device transfers.",
   "status": {
     "typecheck": "passed: shared, agent, web, mobile",
     "build": "passed: shared, agent, web, Electron NSIS, Android release",
@@ -32,18 +32,18 @@
   },
   "artifacts": {
     "installer": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.0-x64.exe",
-      "sizeBytes": 97776543,
-      "sha256": "759FA12C29BE629111F95D5865ADBE5062877C6B50AD90D79A9C2A5A6157F682",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.1-x64.exe",
+      "sizeBytes": 97775926,
+      "sha256": "D6967E6341850C751171EA06D0E9F538ADC5D688E8A4B601B6D0794688BEBBB2",
       "authenticode": "not-signed"
     },
     "androidApk": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.0.apk",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.1.apk",
       "sizeBytes": 87498916,
-      "sha256": "30EDCBB4BD70BBC285B2CCD0056B04539E38A99C426F0DF0BB11BE6710BBFDCD",
+      "sha256": "9D0426C0DC03AE8E6F9CF69D1632F175E3585529FF802BA8785DF33628E17057",
       "package": "com.mrrobot.mobile",
-      "versionName": "0.3.0",
-      "versionCode": 5,
+      "versionName": "0.3.1",
+      "versionCode": 6,
       "targetSdk": 36,
       "signatureSchemeV2": true,
       "certificateSha256": "EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6"
@@ -56,7 +56,7 @@
       "embeddedInDesktop": true,
       "embeddedInApk": true
     },
-    "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.0",
+    "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.1",
     "runtimeConfig": "C:\\Users\\lrsze\\.mr-robot"
   },
   "completed": [
@@ -100,6 +100,7 @@
     "Google Calendar cloud sync requires the user's OAuth client; local calendar and ICS do not",
     "Android builds older than 0.3.0 used a debug certificate and require one uninstall before installing the dedicated release-signed APK",
     "the Android release key must be preserved for future in-place updates and is not stored in Git",
+    "Windows React Native/NDK release builds require an ASCII-only checkout path; the published APK was built from an ASCII checkout",
     "an Orca worktree accepted before cancellation is not automatically deleted because it may contain user data",
     "quality-per-token routing improves efficiency but cannot guarantee universally best answers"
   ],

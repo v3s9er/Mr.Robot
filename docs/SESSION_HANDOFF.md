@@ -1,14 +1,14 @@
-# Mr.Robot 0.3.0 session handoff — 2026-08-31
+# Mr.Robot 0.3.1 session handoff — 2026-08-31
 
 ## Resume in one sentence
 
-Continue from the public-ready 0.3.0 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; the source, Windows installer, Android APK, automated tests, browser QA, security checks, leak soak, signing verification, and third-party notices are complete.
+Continue from the public-ready 0.3.1 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; the source, Windows installer, Android APK, automated tests, browser QA, security checks, leak soak, signing verification, and third-party notices are complete.
 
 ## Product state
 
 Mr.Robot is a desktop-first agent workspace that also works from Android. The PC is fully usable without a paired phone. Each conversation can run a direct Codex, Claude Code, API, or local model, or apply a reusable multi-agent graph. Workspaces, model/reasoning choice, access policy, scenario, files, stop, and steering are conversation-scoped.
 
-The 0.3.0 work supersedes every older 0.1/0.2 handoff entry. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca is disabled by default.
+The 0.3.1 distribution supersedes every older 0.1/0.2 handoff entry and packages the 0.3 ecosystem overhaul with aligned versions and fresh artifacts. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca is disabled by default.
 
 ## Completed desktop and agent behavior
 
@@ -45,20 +45,20 @@ The 0.3.0 work supersedes every older 0.1/0.2 handoff entry. Product-controlled 
 - Remote non-admin sessions are read-only where management actions are unavailable; hiding a button is never the security boundary.
 - Plugin calls receive host-owned execution contexts and AbortSignals. Plugins cannot forge another device's identity or broaden the current access grant.
 - MCP tools remain modular. Calendar works locally and with ICS without cloud credentials. Google Calendar cloud access remains an optional user-owned OAuth integration.
-- The CTF Docker runner confines resolved workspaces, rejects symlink/junction and time-of-check/time-of-use escapes, disables networking by default, applies process/capability/resource limits, and cleans up cancellation. Configured toolbox tag: `mr-robot/ctf-toolbox:0.3.0`.
+- The CTF Docker runner confines resolved workspaces, rejects symlink/junction and time-of-check/time-of-use escapes, disables networking by default, applies process/capability/resource limits, and cleans up cancellation. Configured toolbox tag: `mr-robot/ctf-toolbox:0.3.1`.
 - The installer dependency wizard detects missing allowlisted tools and can install/update them. Interactive Codex, Claude, Google, and other account logins are never bundled or copied.
 
 ## Final artifacts
 
-- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.0-x64.exe`
-  - Size: 97,776,543 bytes
-  - SHA-256: `759FA12C29BE629111F95D5865ADBE5062877C6B50AD90D79A9C2A5A6157F682`
+- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.1-x64.exe`
+  - Size: 97,775,926 bytes
+  - SHA-256: `D6967E6341850C751171EA06D0E9F538ADC5D688E8A4B601B6D0794688BEBBB2`
   - Authenticode: unsigned
-- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.0.apk`
+- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.1.apk`
   - Size: 87,498,916 bytes
-  - SHA-256: `30EDCBB4BD70BBC285B2CCD0056B04539E38A99C426F0DF0BB11BE6710BBFDCD`
+  - SHA-256: `9D0426C0DC03AE8E6F9CF69D1632F175E3585529FF802BA8785DF33628E17057`
   - Package: `com.mrrobot.mobile`
-  - Version: `0.3.0` / versionCode `5` / targetSdk `36`
+  - Version: `0.3.1` / versionCode `6` / targetSdk `36`
   - APK Signature Scheme v2: verified
   - Signer certificate SHA-256: `EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6`
 - Third-party notices: `THIRD_PARTY_NOTICES.txt`
@@ -83,13 +83,15 @@ The 0.3.0 work supersedes every older 0.1/0.2 handoff entry. Product-controlled 
 ## Installation and upgrade notes
 
 - Windows is not Authenticode-signed. SmartScreen may require **More info → Run anyway**; verify the SHA-256 first.
-- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.0, and pair again.
+- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.1, and pair again. Android 0.3.0 can update directly because 0.3.1 uses the same signer and a higher versionCode.
 - Future 0.3.x APKs can update normally only while the same release signing key is preserved. Its password is protected for this Windows user with DPAPI and is not stored in the repository.
+- The Android release script refuses missing or partial signing state by default and verifies the official signer fingerprint after packaging. `-InitializeSigningKey` is reserved for intentionally creating a different signing identity.
 
 ## Honest external boundaries
 
 - Quick Link URLs are temporary and change after restart. A stable branded endpoint needs a user-owned Cloudflare named tunnel or a maintained relay/OAuth backend.
 - Windows public-trust signing needs a user-owned code-signing certificate.
+- Windows React Native/NDK release builds require an ASCII-only checkout path. The published 0.3.1 APK was built and verified from `C:\Users\lrsze\MrRobot-overhaul-20260830` because the canonical project path contains Korean characters.
 - A real physical-phone pass is still recommended for vendor-specific background restrictions, camera pairing, keyboard behavior, and remote transfers.
 - Google Calendar cloud sync needs the user's OAuth client; local calendar and ICS work without it.
 - If Orca accepted creation of a worktree before cancellation, Mr.Robot stops the process tree but does not delete that worktree automatically because it may contain user data.
@@ -101,7 +103,7 @@ Never commit or log provider API keys, pairing secrets, PINs, device credentials
 
 ## Fast validation commands
 
-Run from `C:\Team\_Nameless\취미\BOT\Mr.Robot`:
+Run the source checks from `C:\Team\_Nameless\취미\BOT\Mr.Robot`:
 
 ```powershell
 npm run typecheck
@@ -109,5 +111,10 @@ npm test
 npm run test:leak
 npm audit --omit=dev
 npm run build:installer
-powershell -ExecutionPolicy Bypass -File .\scripts\build-mobile-release.ps1
+```
+
+Run the Android release command from an ASCII-only checkout such as `C:\Users\lrsze\MrRobot-overhaul-20260830`:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\build-mobile-release.ps1 -OutputDirectory .\release\mobile
 ```
