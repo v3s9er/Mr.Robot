@@ -1,109 +1,103 @@
-# Mr.Robot session handoff — 2026-08-20
+# Mr.Robot 0.3.0 session handoff — 2026-08-31
 
 ## Resume in one sentence
 
-Continue developing `C:\Team\_Nameless\취미\BOT\Mr.Robot` as an installable Windows/mobile AI-agent hub; the newest completed work is grouped model councils with validation judging, three efficient workflow presets, and token-free direct device file/work synchronization.
+Continue from the public-ready 0.3.0 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; the source, Windows installer, Android APK, automated tests, browser QA, security checks, leak soak, signing verification, and third-party notices are complete.
 
-## Completed architecture and UI
+## Product state
 
-- Persistent multi-conversation storage, chat streaming, context compression, structured memory, and reasoning-effort selection.
-- Multi-provider routing for API, local, Codex subscription CLI, and Claude subscription CLI models.
-- Device pairing, device-specific permission caps, admin-only management, and PC delegation.
-- Freely arranged routing graph with model, critic, memory, executor, and Orca execution nodes.
-- Four protected built-in routing presets plus persistent user presets with save/apply/overwrite/delete RPC and UI flows.
-- Provider models remain editable after registration; discovered model lists feed the same editor.
-- Free/local sources are always cost tier 0, strict health checks reject authentication/404 failures, and Ollama `/v1` URLs normalize correctly.
-- Orca delegation and automatic launch default to disabled; an explicit saved opt-in remains persistent.
-- Codex-like sidebar/profile/settings navigation and selective tool exposure.
-- Built-in Orca execution backend and Windows NSIS installer.
-- Every graph node can be assigned a role, provider/model, and free-form group. Vote/hybrid groups exchange opinions for 1–3 rounds; the final critic node independently validates the result rather than blindly following the majority.
-- Added built-ins: low-cost efficient vote, sequential execution/validation, and classification/council/validation hybrid. The preset browser is a clickable list with a read-only graph preview.
-- Authenticated direct file streaming is restricted to `~/.mr-robot/shared`; PC-to-PC pulls do not route bytes through the phone or an AI model.
-- Versioned work sync merges conversations and user presets by latest update time. Mobile and desktop both expose the device mesh UI.
-- Mobile chat selects PC-default commands, one explicit model, or any saved complex-tree preset per conversation.
+Mr.Robot is a desktop-first agent workspace that also works from Android. The PC is fully usable without a paired phone. Each conversation can run a direct Codex, Claude Code, API, or local model, or apply a reusable multi-agent graph. Workspaces, model/reasoning choice, access policy, scenario, files, stop, and steering are conversation-scoped.
 
-## Rename completed
+The 0.3.0 work supersedes every older 0.1/0.2 handoff entry. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca is disabled by default.
 
-- Product/display name: `Mr.Robot`.
-- npm/workspace and protocol identifier: `mr-robot` / `@mr-robot/*`.
-- code identifiers: `MrRobot*`; environment variables: `MR_ROBOT_*`.
-- runtime directory: `~/.mr-robot`; installer: `Mr.Robot-Setup-0.1.0-x64.exe`.
-- Product-controlled source, docs, generated web/agent output, and packaged app contain no old product-name references.
-- Third-party `node_modules` still contains Google device-emulation image names from React Native DevTools; generated dependency assets must not be renamed.
+## Completed desktop and agent behavior
 
-## First-run dependency setup completed
+- Polished responsive shell, navigation, conversation context menus, model/scenario/workspace/access selectors, drag-and-drop, file manager, calendar, plugin management, dependency setup, settings, loading/error/empty states, and explicit non-admin read-only affordances.
+- Pin, rename, archive, restore, and delete conversations. Active work is tracked per conversation, so switching chats cannot strand or falsely stop another run.
+- Direct single-model execution and reusable sequential, voting, validation, hybrid council, smart-cascade, and competitive CTF presets. Protected built-ins cannot be modified or deleted; copied/custom presets can.
+- Compact graph nodes open focused editors. Edges, direction, groups, group bounds, debate rounds, voting, validation judges, fallbacks, create/edit/delete, and graph previews are persisted.
+- ContextBroker fingerprints and bounds source material once, reuses shared summaries and provider cache prefixes, and evicts by byte-limited LRU. Usage separates input, output, reasoning, cache-read, and cache-write tokens.
+- Per-run provider budgets, fallbacks, terminal-event validation, cancellation, safe-boundary steering, subprocess-tree cleanup, and Docker cleanup prevent silent hangs and post-completion spinning.
+- Provider registration no longer locks the model. Discovered models, reasoning effort, default model, and per-conversation model remain switchable.
+- Provider URLs, headers, and error text are sanitized; invalid authentication/404 health responses are rejected instead of being treated as a successful connection.
 
-- First authenticated desktop connection opens a modal until the check is marked complete.
-- The same screen remains available under Settings → External tools.
-- Detects actual executability and known install paths for Node.js LTS, Git, Codex CLI, Claude Code, Orca, Ollama, and Tailscale.
-- Uses a fixed allowlist only: `winget` IDs for Node/Git/Orca/Ollama and official npm packages for Codex/Claude.
-- Commands are spawned without a user-controlled shell string; output and time are bounded, and concurrent installs are blocked.
-- Codex/Claude authentication stays interactive and is never bundled or copied.
+## Completed mobile behavior
 
-## Important changed files
+- Android uses safe areas, `KeyboardAvoidingView`, `adjustResize`, and keyboard-aware bottom navigation so the composer and modal actions stay visible while typing.
+- Conversation-isolated run state, stop, steering, reconnect/backoff, connection diagnostics, file progress, cancellation, and partial-file cleanup mirror the desktop workflow.
+- Per-PC credentials are stored with SecureStore. The UI does not require a PC until the user chooses a remote workflow; desktop remains standalone.
+- Mobile supports direct/single-model and complex preset execution through the selected PC, files, schedules, conversations, and device management.
+- Mobile always-listening voice was intentionally removed. Desktop voice remains opt-in and configurable.
 
-- `packages/agent/src/dependencies.ts`
-- `packages/agent/src/config.ts`
-- `packages/agent/src/server/server.ts`
-- `packages/agent/src/ai/provider.ts`, `registry.ts`, `openai.ts`, `anthropic.ts`, `cli.ts`
-- `packages/agent/src/plugins/orca.ts`
-- `packages/shared/src/protocol.ts`
-- `packages/web/src/components/DependencySetup.tsx`
-- `packages/web/src/App.tsx`
-- `packages/web/src/views/SettingsView.tsx`
-- `packages/web/src/styles.css`
-- `packages/agent/test/dependencies.mjs`
-- `packages/agent/test/routing-presets.mjs`
-- `scripts/stage-desktop.mjs`
-- all product source/config/docs touched by the rename
+## Remote connection, transfer, and synchronization
 
-## Local environment and artifacts
+- Plain HTTP LAN pairing is blocked. Use the loopback desktop app, a temporary HTTPS Quick Link, or an encrypted Tailscale address.
+- The Remote Link plugin offers an opt-in Cloudflare Quick Link: a temporary HTTPS/WSS address and QR flow that works away from home without keeping a phone VPN active.
+- Tailscale is an optional plugin, not a built-in requirement. Keeping it disabled avoids conflicts with banking and other VPN-sensitive apps.
+- File upload/download and work synchronization transfer bytes directly and do not invoke a model or consume model tokens.
+- Cross-PC pulls use a 90-second, single-use capability. A source PC's long-lived device credential is never forwarded.
+- Upload/download is cancellable, partial files are removed, path traversal is rejected, resolved paths stay inside allowed roots, and files are capped at 2 GiB.
+- Work sync validates object count and byte limits before commit, merges by update time, and rolls back when persistence fails.
 
-- Project: `C:\Team\_Nameless\취미\BOT\Mr.Robot`.
-- Installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.1.0-x64.exe`.
-- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.1.1.apk` (release bundle, locally signed for sideloading).
-- Installer is built but not installed on this Windows account.
-- Desktop/web dependencies: React 19.2.8, Express 5.2.1, Zod 4.4.3, TypeScript 7.0.2; root audit has zero vulnerabilities.
-- Mobile compatibility set: Expo 57.0.15, React 19.2.3, React Native 0.86.2, TypeScript 6.0.3; Expo Doctor passes 21/21 checks.
-- Installed external tools: Node.js 24.13.1, Git 2.53.0, Codex CLI 0.148.0, Claude Code 2.1.237, Orca 1.4.185, Ollama 0.32.9, Tailscale 1.102.2.
-- Tailscale is installed but currently reports `NeedsLogin`; the user must complete the interactive Google login on this PC and the phone.
-- Orca CLI: `C:\Users\lrsze\AppData\Local\Programs\orca\resources\bin\orca.exe`; installed but runtime currently stopped.
-- Claude Code still requires interactive account login. Codex credentials were not copied or modified.
+## Access and plugin security
 
-## Persistent state and security
+- Global, paired-device, conversation, workspace, and destructive-action limits form hard ceilings and are rechecked at execution time.
+- Remote non-admin sessions are read-only where management actions are unavailable; hiding a button is never the security boundary.
+- Plugin calls receive host-owned execution contexts and AbortSignals. Plugins cannot forge another device's identity or broaden the current access grant.
+- MCP tools remain modular. Calendar works locally and with ICS without cloud credentials. Google Calendar cloud access remains an optional user-owned OAuth integration.
+- The CTF Docker runner confines resolved workspaces, rejects symlink/junction and time-of-check/time-of-use escapes, disables networking by default, applies process/capability/resource limits, and cleans up cancellation. Configured toolbox tag: `mr-robot/ctf-toolbox:0.3.0`.
+- The installer dependency wizard detects missing allowlisted tools and can install/update them. Interactive Codex, Claude, Google, and other account logins are never bundled or copied.
 
-- New live state will be created at `C:\Users\lrsze\.mr-robot` on first application launch.
-- The archived state snapshot is stored in the project’s `.mr-robot` directory.
-- DPAPI ciphertext is bound to the Windows user that created it and is not portable between accounts.
-- Never print API keys, pairing secrets, PINs, or third-party login tokens in logs.
-- Plaintext credentials supplied in the handoff message were not written into source, docs, or logs.
+## Final artifacts
 
-## Verification snapshot
+- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.0-x64.exe`
+  - Size: 97,776,543 bytes
+  - SHA-256: `759FA12C29BE629111F95D5865ADBE5062877C6B50AD90D79A9C2A5A6157F682`
+  - Authenticode: unsigned
+- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.0.apk`
+  - Size: 87,498,916 bytes
+  - SHA-256: `30EDCBB4BD70BBC285B2CCD0056B04539E38A99C426F0DF0BB11BE6710BBFDCD`
+  - Package: `com.mrrobot.mobile`
+  - Version: `0.3.0` / versionCode `5` / targetSdk `36`
+  - APK Signature Scheme v2: verified
+  - Signer certificate SHA-256: `EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6`
+- Third-party notices: `THIRD_PARTY_NOTICES.txt`
+  - 635 production packages, 973,444 bytes
+  - SHA-256: `7971D237979B5EBD9B910A3A538530E73E14ABBD05942C9D8533CFB5E371D3F1`
+  - Deterministically reproduced and embedded in the desktop package and APK
 
-- root `npm run typecheck`: passed.
-- root `npm run build`: passed.
-- root `npm test`: passed smoke, scheduler, AI-loop, dependency-check, routing-preset, provider-health, and model-switch tests.
-- mobile `npm run typecheck`: passed.
-- Browser QA: first-run dependencies, routing preset apply/save/list, free local provider card, post-registration model change, and Orca-off defaults passed.
-- `npm run build:installer`: passed after making desktop staging robust for non-ASCII Windows paths.
-- Installer is unsigned; code signing remains required for public distribution.
-- Mobile npm audit still reports Expo/Metro development-tool transitive advisories; npm's only forced proposal downgrades Expo to SDK 53, so it was rejected while Expo Doctor remains clean.
-- Direct file upload/download, PC-to-PC pull, path-traversal blocking, snapshot export, and zero-AI-token work pull passed automated HTTP tests.
-- Browser QA passed for the device share screen and clickable preset list/graph preview, including the grouped low-cost voting preset.
-- Mobile 0.1.1 keeps the camera open until a QR connection actually succeeds, shows scan errors in place, and falls back from saved LAN endpoints to a Tailscale endpoint automatically.
-- Pairing QR payload v3 stores LAN plus authenticated Tailscale addresses. Link-local adapter addresses are rejected; only Tailscale's `100.64.0.0/10` IPv4 range is accepted.
-- Browser QA passed for the mobile connection panel: it shows `192.168.0.79:8787` for LAN and correctly reports that no external address exists before Tailscale login.
-- The current unpacked desktop app was restarted and `/api/ping` is healthy on port 8787.
-- APK SHA-256: `919AC56A0A5EF34895307AF1FE610C1408EC58EBE6B96F174122BE81C0196A84`; installer SHA-256: `C38B2A457C853BB8B98DB79418F675F1E5026F1A2305CDF8876578962F521A04`.
+## Final verification
 
-## Recommended next implementation order
+- `npm run typecheck`: passed for shared, agent, web, and mobile.
+- `npm run build`: passed.
+- `npm test`: passed smoke, core hardening, storage recovery, executable QR security, plugin execution security, provider security, scheduler, AI loop, dependencies, routing, CLI, v0.2 compatibility, 51-RPC UI contract, logger, and voice suites.
+- `npm run test:leak`: passed. Total retained-heap drift was 1,340 KiB after 600 plugin cycles, 80 WebSocket cycles, and 20 stream start/stop cycles; no leak detected.
+- Root and mobile `npm audit --omit=dev`: 0 vulnerabilities.
+- License scan: passed; deterministic notices include Sharp/libvips LGPL components and all production package notices.
+- Desktop browser QA: model and preset switching, workspace selection, access control, conversation menus, files, plugins, calendar, settings, and responsive layout at 1280×720, 1024×600, and 800×600 passed with no console errors.
+- Narrow viewport QA at 430×800 passed; preset nodes remained non-overlapping and scrollable, and the chat composer stayed visible.
+- Expo config and production export passed.
+- Electron NSIS installer, Android release build, APK metadata, v2 signature, artifact hashes, embedded notices, and brand assets were independently verified.
+- `git diff --check` passed; a repository-wide case-insensitive legacy-name scan returned no matches.
 
-1. Run the new installer and complete a clean-user first-launch test.
-2. Complete Claude interactive login, register this Git repository in Orca, and run Codex/Claude delegation E2E.
-3. Install the APK on the physical phone, pair both laptops over LAN, then test optional Tailscale connectivity away from home.
-4. Track the upstream Expo/Metro security fixes without downgrading SDK 57.
-5. Rework leak-test baseline with a warm-up phase.
-6. Add application icon, code signing, version bumping, and auto-update.
+## Installation and upgrade notes
+
+- Windows is not Authenticode-signed. SmartScreen may require **More info → Run anyway**; verify the SHA-256 first.
+- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.0, and pair again.
+- Future 0.3.x APKs can update normally only while the same release signing key is preserved. Its password is protected for this Windows user with DPAPI and is not stored in the repository.
+
+## Honest external boundaries
+
+- Quick Link URLs are temporary and change after restart. A stable branded endpoint needs a user-owned Cloudflare named tunnel or a maintained relay/OAuth backend.
+- Windows public-trust signing needs a user-owned code-signing certificate.
+- A real physical-phone pass is still recommended for vendor-specific background restrictions, camera pairing, keyboard behavior, and remote transfers.
+- Google Calendar cloud sync needs the user's OAuth client; local calendar and ICS work without it.
+- If Orca accepted creation of a worktree before cancellation, Mr.Robot stops the process tree but does not delete that worktree automatically because it may contain user data.
+- No system can guarantee universally best answers. The defaults optimize quality per token through routing, selective escalation, shared context, validation, and bounded parallelism.
+
+## Sensitive-state rules
+
+Never commit or log provider API keys, pairing secrets, PINs, device credentials, OAuth tokens, private signing keys, or DPAPI blobs. No such values are present in this release's source, documentation, or Git history. Runtime secrets stay in `~/.mr-robot` or the platform credential store.
 
 ## Fast validation commands
 
@@ -112,52 +106,8 @@ Run from `C:\Team\_Nameless\취미\BOT\Mr.Robot`:
 ```powershell
 npm run typecheck
 npm test
+npm run test:leak
+npm audit --omit=dev
 npm run build:installer
-npm run typecheck --prefix apps/mobile
-& 'C:\Users\lrsze\AppData\Local\Programs\orca\resources\bin\orca.exe' status --json
+powershell -ExecutionPolicy Bypass -File .\scripts\build-mobile-release.ps1
 ```
-
-## 0.2.0 final handoff (2026-08-23)
-
-The 0.2.0 implementation supersedes the older 0.1.x snapshot above. The current desktop process is the freshly built unpacked 0.2.0 app and its health endpoint passes at `http://127.0.0.1:8787/api/ping`.
-
-### Final artifacts
-
-- Windows installer: `release/Mr.Robot-Setup-0.2.0-x64.exe`
-- Android package: `release/mobile/Mr.Robot-Mobile-0.2.0.apk`
-- CTF sandbox image: `mr-robot/ctf-toolbox:0.2.0`
-- Machine-readable resume cache: `docs/SESSION_STATE.json`
-- User-facing guide: `docs/USER_GUIDE_0.2.md`
-- Research and attribution notes: `docs/RESEARCH_AND_LICENSES.md`
-
-The Android build was produced from `C:\Users\lrsze\MrRobotMobileBuild`, an ASCII-only mirror of the same source. This is a Windows NDK/Ninja path workaround for the Korean characters in the canonical project path; the canonical project remains `C:\Team\_Nameless\취미\BOT\Mr.Robot`.
-
-### Completed product behavior
-
-- A conversation can select no scenario for a direct single-model Codex/Claude run, or select sequential, vote, validation, hybrid, smart-routing, or CTF scenarios.
-- Scenario nodes are compact role cards. Opening a node exposes role, provider/model, group, prompts, edges, debate rounds, voting, validation, and fallback behavior.
-- The shared context broker reads and fingerprints source material once, then distributes bounded references and cached summaries to participating models instead of repeatedly uploading the same material.
-- Each conversation stores its own access level (`ask`, `read-only`, `workspace`, or `full`). A paired device's policy is the hard upper bound; selecting a broader chat level cannot bypass it.
-- Conversations support pin/unpin, pinned-first ordering, rename, archive, delete, and right-click/long-press actions.
-- Chat and Files both accept multiple files and drag-and-drop. Uploads go directly to the selected workspace or shared storage without spending model tokens.
-- Active jobs expose stop and steering controls. New instructions are queued at safe orchestration boundaries.
-- Voice input works on desktop and Android; the wake-claim handshake gives the PC priority when PC and phone hear “미스터 로봇” together.
-- Calendar/scheduler, Tailscale transport, MCP host, CTF classifier, Docker sandbox, and Orca delegation are modular plugins. Orca is off by default.
-- The first-run dependency wizard detects and can install/update the allowlisted Node, Git, Codex, Claude Code, Tailscale, and Docker dependencies.
-
-### Final verification
-
-- `npm run typecheck`: shared, agent, web, and mobile passed.
-- `npm run build`: passed.
-- `npm test`: smoke, scheduler, AI loop, dependencies, routing, CLI resolution, workspace/cache/steering, pinning, and conversation access passed.
-- Browser QA: model and scenario switching, workspace picker, per-chat access control, schedules/calendar, file manager, plugin metadata, and Orca-off default passed without console errors.
-- Hardened Docker run: toolbox imports for pwn, angr, and z3 passed with network disabled, read-only root, dropped capabilities, PID/memory/CPU limits, and no-new-privileges.
-- Installer SHA-256: `600E4DC4DA938C57C312B3F3D2FDF193A418B99B54ABE24154BF9E2829A809AB`.
-- APK SHA-256: `CAB43224B3670A9D0ED54C086C7311DC62F82E2D384964A46E1B3744F0C4F58D`.
-
-### External boundaries
-
-- Google Calendar cloud sync needs a user-owned OAuth client. Local calendar and ICS import/export are ready without OAuth.
-- The Windows installer and Android APK are suitable for local testing/sideloading but need production certificates before public distribution.
-- Physical-phone tests remain for camera pairing, microphone behavior, background wake policy, and away-from-LAN transfer.
-- Credentials remain outside source and docs. Do not add plaintext provider keys, device secrets, PINs, or account tokens to the work-product archive.
