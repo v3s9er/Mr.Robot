@@ -1,14 +1,14 @@
-# Mr.Robot 0.3.2 session handoff — 2026-08-31
+# Mr.Robot 0.3.3 session handoff — 2026-08-31
 
 ## Resume in one sentence
 
-Continue from the security-audited 0.3.2 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; the source, Windows installer, Android APK, automated tests, remote-link hardening, leak soak, Android signing verification, checksums, and third-party notices are complete.
+Continue from the verified 0.3.3 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; the source, Windows installer, Android APK, automated tests, stable plugin refresh, reliable Quick Link dependency bootstrap, remote-link hardening, leak soak, Android signing verification, checksums, and third-party notices are complete.
 
 ## Product state
 
 Mr.Robot is a desktop-first agent workspace that also works from Android. The PC is fully usable without a paired phone. Each conversation can run a direct Codex, Claude Code, API, or local model, or apply a reusable multi-agent graph. Workspaces, model/reasoning choice, access policy, scenario, files, stop, and steering are conversation-scoped.
 
-The 0.3.2 distribution supersedes older handoff entries and adds a fixed user-domain Cloudflare Tunnel without turning remote connectivity into a built-in dependency. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca, Tailscale and Remote Link are disabled by default.
+The 0.3.3 distribution supersedes older handoff entries. It keeps the fixed user-domain Cloudflare Tunnel, installs its small connector dependency when missing, and never enables or exposes Remote Link without an explicit administrator action. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca, Tailscale and Remote Link are disabled by default.
 
 ## Completed desktop and agent behavior
 
@@ -20,6 +20,8 @@ The 0.3.2 distribution supersedes older handoff entries and adds a fixed user-do
 - Per-run provider budgets, fallbacks, terminal-event validation, cancellation, safe-boundary steering, subprocess-tree cleanup, and Docker cleanup prevent silent hangs and post-completion spinning.
 - Provider registration no longer locks the model. Discovered models, reasoning effort, default model, and per-conversation model remain switchable.
 - Provider URLs, headers, and error text are sanitized; invalid authentication/404 health responses are rejected instead of being treated as a successful connection.
+- The plugin view no longer resubscribes and refreshes through a `remoteStatus → plugins → remoteStatus` cycle. Orca and Cloudflare buttons stay visually stable, and passive refresh no longer spawns repeated CLI/dependency probes.
+- Stopped Remote Link status refresh preserves the saved fixed-Tunnel `autoStart` preference.
 
 ## Completed mobile behavior
 
@@ -47,21 +49,21 @@ The 0.3.2 distribution supersedes older handoff entries and adds a fixed user-do
 - Remote non-admin sessions are read-only where management actions are unavailable; hiding a button is never the security boundary.
 - Plugin calls receive host-owned execution contexts and AbortSignals. Plugins cannot forge another device's identity or broaden the current access grant.
 - MCP tools remain modular. Calendar works locally and with ICS without cloud credentials. Google Calendar cloud access remains an optional user-owned OAuth integration.
-- The CTF Docker runner confines resolved workspaces, rejects symlink/junction and time-of-check/time-of-use escapes, disables networking by default, applies process/capability/resource limits, and cleans up cancellation. Configured toolbox tag: `mr-robot/ctf-toolbox:0.3.2`.
+- The CTF Docker runner confines resolved workspaces, rejects symlink/junction and time-of-check/time-of-use escapes, disables networking by default, applies process/capability/resource limits, and cleans up cancellation. Configured toolbox tag: `mr-robot/ctf-toolbox:0.3.3`.
 - Public responses use CSP/no-store/clickjacking/capability-policy headers. Desktop downloads require a trusted main frame and a matching encrypted saved-PC origin+credential, reject redirects, and stop at 2 GiB.
-- The installer dependency wizard detects missing allowlisted tools and can install/update them. Interactive Codex, Claude, Google, and other account logins are never bundled or copied.
+- Dependency wizard v5 detects missing allowlisted tools and automatically includes cloudflared. Its probe covers WinGet Links, Program Files, and Program Files (x86); installation uses the official x64 user-scoped portable WinGet package. The plugin also exposes an explicit install button, with long RPC timeouts for real package-manager latency. Interactive Codex, Claude, Google, and other account logins are never bundled or copied.
 
 ## Final artifacts
 
-- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.2-x64.exe`
-  - Size: 97,783,858 bytes
-  - SHA-256: `AFBDEC083B78E3C67507811AA4DA27D76F1D2585CB4225E8ED0C019BBB712932`
+- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.3-x64.exe`
+  - Size: 97,784,630 bytes
+  - SHA-256: `D452AD12621080E2816ACBA8F3670B51BBD277A344BA30DF5F3DEDE9620D2CC8`
   - Authenticode: unsigned
-- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.2.apk`
+- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.3.apk`
   - Size: 87,498,916 bytes
-  - SHA-256: `29285CEB01BEB556FF9FAC32D66368782CE5F476992C4097F6ABE06503604707`
+  - SHA-256: `7AF6A9DA64DD4BDCA2013F0C87ED62549E9949C4FB3259D68A0EE7E05B082828`
   - Package: `com.mrrobot.mobile`
-  - Version: `0.3.2` / versionCode `7` / targetSdk `36`
+  - Version: `0.3.3` / versionCode `8` / minSdk `24` / targetSdk `36`
   - APK Signature Scheme v2: verified
   - Signer certificate SHA-256: `EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6`
 - Third-party notices: `THIRD_PARTY_NOTICES.txt`
@@ -77,7 +79,7 @@ The 0.3.2 distribution supersedes older handoff entries and adds a fixed user-do
 - `npm run test:leak`: passed. Total retained-heap drift was 1,332 KiB after 600 plugin cycles, 80 WebSocket cycles, and 20 stream start/stop cycles; no leak detected.
 - Root full/production and mobile production `npm audit`: 0 vulnerabilities.
 - License scan: passed; deterministic notices include Sharp/libvips LGPL components and all production package notices.
-- The prior 0.3.1 responsive browser QA remains valid for unchanged surfaces; 0.3.2 additionally passed its focused Remote Link and desktop IPC UI contracts.
+- The prior 0.3.1 responsive browser QA remains valid for unchanged surfaces; 0.3.3 additionally passed focused Remote Link, cloudflared bootstrap, plugin-refresh-loop, and desktop IPC UI contracts.
 - Expo config and production export passed.
 - Electron NSIS installer, Android release build, APK metadata, v2 signature, artifact hashes, embedded notices, and brand assets were independently verified.
 - `git diff --check` passed; a repository-wide case-insensitive legacy-name scan returned no matches.
@@ -85,15 +87,15 @@ The 0.3.2 distribution supersedes older handoff entries and adds a fixed user-do
 ## Installation and upgrade notes
 
 - Windows is not Authenticode-signed. SmartScreen may require **More info → Run anyway**; verify the SHA-256 first.
-- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.2, and pair again. Android 0.3.0/0.3.1 can update directly because 0.3.2 uses the same signer and a higher versionCode.
+- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.3, and pair again. Android 0.3.0 through 0.3.2 can update directly because 0.3.3 uses the same signer and a higher versionCode.
 - Future 0.3.x APKs can update normally only while the same release signing key is preserved. Its password is protected for this Windows user with DPAPI and is not stored in the repository.
 - The Android release script refuses missing or partial signing state by default and verifies the official signer fingerprint after packaging. `-InitializeSigningKey` is reserved for intentionally creating a different signing identity.
 
 ## Honest external boundaries
 
-- Quick Link URLs are temporary and change after restart. The 0.3.2 plugin supports a stable user-owned Cloudflare named Tunnel; the PC, Mr.Robot and cloudflared still need to be running.
+- Quick Link URLs are temporary and change after restart. The 0.3.3 plugin supports a stable user-owned Cloudflare named Tunnel; the PC, Mr.Robot and cloudflared still need to be running.
 - Windows public-trust signing needs a user-owned code-signing certificate.
-- Windows React Native/NDK release builds require an ASCII-only and short checkout path. The 0.3.2 APK was built and verified from `C:\MR032` because the canonical project path contains Korean characters and long CMake object paths can exceed Win32 limits.
+- Windows React Native/NDK release builds require an ASCII-only and short checkout path. The 0.3.3 APK was built and verified from `C:\MR033` because the canonical project path contains Korean characters and long CMake object paths can exceed Win32 limits.
 - A real physical-phone pass is still recommended for vendor-specific background restrictions, camera pairing, keyboard behavior, and remote transfers.
 - Google Calendar cloud sync needs the user's OAuth client; local calendar and ICS work without it.
 - If Orca accepted creation of a worktree before cancellation, Mr.Robot stops the process tree but does not delete that worktree automatically because it may contain user data.
@@ -115,7 +117,7 @@ npm audit --omit=dev
 npm run build:installer
 ```
 
-Run the Android release command from a short ASCII-only checkout such as `C:\MR032`:
+Run the Android release command from a short ASCII-only checkout such as `C:\MR033`:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\build-mobile-release.ps1 -OutputDirectory .\release\mobile

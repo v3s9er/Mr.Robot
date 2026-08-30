@@ -1,18 +1,18 @@
 {
   "schema": "mr-robot-session-state/v3",
-  "createdAt": "2026-08-31T06:11:31.7018148+09:00",
+  "createdAt": "2026-08-31T07:20:00+09:00",
   "project": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot",
   "release": {
-    "version": "0.3.2",
+    "version": "0.3.3",
     "gitBranch": "main",
-    "gitTag": "v0.3.2",
+    "gitTag": "v0.3.3",
     "visibility": "public"
   },
-  "resumeObjective": "Iterate from the security-audited 0.3.2 desktop/mobile ecosystem; preserve remote-connection security ceilings, token accounting, Android release-signing identity, and direct token-free device transfers.",
+  "resumeObjective": "Iterate from the verified 0.3.3 desktop/mobile ecosystem; preserve stable plugin refresh, reliable Quick Link bootstrap, remote-connection security ceilings, token accounting, Android release-signing identity, and direct token-free device transfers.",
   "status": {
     "typecheck": "passed: shared, agent, web, mobile",
     "build": "passed: shared, agent, web, Electron NSIS, Android release",
-    "tests": "passed: smoke, core-hardening, storage-recovery, executable QR-security, plugin-execution-security, provider-security, scheduler, AI-loop, dependencies, routing, CLI, v0.2 compatibility, UI contract (51 RPC), logger, voice",
+    "tests": "passed: smoke, core-hardening, storage-recovery, executable QR-security, plugin-execution-security, provider-security, scheduler, AI-loop, dependencies, routing, CLI, v0.2 compatibility, UI contract (51 RPC plus plugin refresh/cloudflared bootstrap regressions), logger, voice",
     "leakTest": {
       "result": "passed: no leak detected",
       "pluginBatch1KiB": 335,
@@ -21,7 +21,7 @@
       "webSocketBatch2KiB": 43,
       "totalDriftKiB": 1332
     },
-    "browserQa": "0.3.1 responsive matrix retained; 0.3.2 focused Remote Link and desktop IPC UI contracts passed",
+    "browserQa": "0.3.1 responsive matrix retained; 0.3.3 focused Remote Link, cloudflared bootstrap, plugin refresh, and desktop IPC UI contracts passed",
     "npmAudit": "passed: root full/production and mobile production audits report 0 vulnerabilities",
     "licenseAudit": "passed: 635 production packages, deterministic notices embedded in Electron and APK",
     "expo": "passed: final config and production export",
@@ -32,18 +32,18 @@
   },
   "artifacts": {
     "installer": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.2-x64.exe",
-      "sizeBytes": 97783858,
-      "sha256": "AFBDEC083B78E3C67507811AA4DA27D76F1D2585CB4225E8ED0C019BBB712932",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.3-x64.exe",
+      "sizeBytes": 97784630,
+      "sha256": "D452AD12621080E2816ACBA8F3670B51BBD277A344BA30DF5F3DEDE9620D2CC8",
       "authenticode": "not-signed"
     },
     "androidApk": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.2.apk",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.3.apk",
       "sizeBytes": 87498916,
-      "sha256": "29285CEB01BEB556FF9FAC32D66368782CE5F476992C4097F6ABE06503604707",
+      "sha256": "7AF6A9DA64DD4BDCA2013F0C87ED62549E9949C4FB3259D68A0EE7E05B082828",
       "package": "com.mrrobot.mobile",
-      "versionName": "0.3.2",
-      "versionCode": 7,
+      "versionName": "0.3.3",
+      "versionCode": 8,
       "targetSdk": 36,
       "signatureSchemeV2": true,
       "certificateSha256": "EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6"
@@ -56,7 +56,7 @@
       "embeddedInDesktop": true,
       "embeddedInApk": true
     },
-    "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.2",
+    "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.3",
     "runtimeConfig": "C:\\Users\\lrsze\\.mr-robot"
   },
   "completed": [
@@ -79,6 +79,8 @@
     "hardened CTF Docker workspace confinement, limits, and cancellation cleanup",
     "local calendar and ICS plus optional user-owned Google Calendar OAuth integration",
     "allowlisted first-run dependency detection and installation/update workflow",
+    "cloudflared probe/install path alignment with x64 user-scoped portable WinGet bootstrap and explicit plugin install action",
+    "ref-based stable plugin status refresh without Orca/Cloudflare busy flicker, repeated subprocess probes, or autoStart preference loss",
     "Orca disabled by default",
     "generated desktop, Android, splash, adaptive, and web brand assets",
     "deterministic third-party notices and production license audit",
@@ -102,7 +104,7 @@
     "Google Calendar cloud sync requires the user's OAuth client; local calendar and ICS do not",
     "Android builds older than 0.3.0 used a debug certificate and require one uninstall before installing the dedicated release-signed APK",
     "the Android release key must be preserved for future in-place updates and is not stored in Git",
-    "Windows React Native/NDK release builds require a short ASCII-only checkout path; the 0.3.2 APK was built from C:\\MR032",
+    "Windows React Native/NDK release builds require a short ASCII-only checkout path; the 0.3.3 APK was built from C:\\MR033",
     "an Orca worktree accepted before cancellation is not automatically deleted because it may contain user data",
     "quality-per-token routing improves efficiency but cannot guarantee universally best answers"
   ],
