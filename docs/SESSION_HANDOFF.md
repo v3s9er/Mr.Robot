@@ -1,14 +1,14 @@
-# Mr.Robot 0.3.4 session handoff — 2026-08-31
+# Mr.Robot 0.3.6 session handoff — 2026-08-31
 
 ## Resume in one sentence
 
-Continue from the verified 0.3.4 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; the source, Windows installer, Android APK, automated tests, live Quick Link address propagation, stable Remote PC management, deliberate two-step mobile QR pairing, administrator-only unattended handoff, leak soak, Android signing verification, and third-party notices are complete. The release commit and `v0.3.4` tag are prepared; external publishing is pending in this handoff.
+Continue from the verified 0.3.6 desktop/mobile ecosystem in `C:\Team\_Nameless\취미\BOT\Mr.Robot`; provider-aware composer reasoning controls, atomic execution-setting saves, the 0.3.5 keyboard and Quick Link recovery fixes, Windows installer, official-signer Android APK, automated tests, leak soak, and third-party notices are complete. Create/publish the `v0.3.6` release from the prepared artifacts.
 
 ## Product state
 
 Mr.Robot is a desktop-first agent workspace that also works from Android. The PC is fully usable without a paired phone. Each conversation can run a direct Codex, Claude Code, API, or local model, or apply a reusable multi-agent graph. Workspaces, model/reasoning choice, access policy, scenario, files, stop, and steering are conversation-scoped.
 
-The 0.3.4 distribution supersedes older handoff entries. It keeps the fixed user-domain Cloudflare Tunnel, installs its small connector dependency when missing, and never enables or exposes Remote Link without an explicit administrator action. A separate 24-hour handoff credential is created only on an administrator request and is never persisted. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca, Tailscale and Remote Link are disabled by default.
+The 0.3.6 distribution supersedes older handoff entries. It keeps the fixed user-domain Cloudflare Tunnel, installs its small connector dependency when missing, and never enables or exposes Remote Link without an explicit administrator action. A separate 24-hour handoff credential is created only on an administrator request and is never persisted. Product-controlled source and documentation contain no legacy product-name references. Runtime data remains under `~/.mr-robot`; Orca, Tailscale and Remote Link are disabled by default.
 
 ## Completed desktop and agent behavior
 
@@ -19,6 +19,8 @@ The 0.3.4 distribution supersedes older handoff entries. It keeps the fixed user
 - ContextBroker fingerprints and bounds source material once, reuses shared summaries and provider cache prefixes, and evicts by byte-limited LRU. Usage separates input, output, reasoning, cache-read, and cache-write tokens.
 - Per-run provider budgets, fallbacks, terminal-event validation, cancellation, safe-boundary steering, subprocess-tree cleanup, and Docker cleanup prevent silent hangs and post-completion spinning.
 - Provider registration no longer locks the model. Discovered models, reasoning effort, default model, and per-conversation model remain switchable.
+- Desktop and Android expose provider-aware reasoning controls at the composer bottom. Model, preset, reasoning, workspace, and access changes acquire a synchronous persistence lock so Send and voice execution cannot start with the previous context.
+- Failed conversation updates restore all in-memory fields and sync metadata; desktop uses matching-field optimistic rollback and Android never restores a stale whole-conversation object.
 - Provider URLs, headers, and error text are sanitized; invalid authentication/404 health responses are rejected instead of being treated as a successful connection.
 - The plugin view no longer resubscribes and refreshes through a `remoteStatus → plugins → remoteStatus` cycle. Orca and Cloudflare buttons stay visually stable, and passive refresh no longer spawns repeated CLI/dependency probes.
 - Stopped Remote Link status refresh preserves the saved fixed-Tunnel `autoStart` preference.
@@ -62,15 +64,15 @@ The 0.3.4 distribution supersedes older handoff entries. It keeps the fixed user
 
 ## Final artifacts
 
-- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.4-x64.exe`
-  - Size: 97,787,680 bytes
-  - SHA-256: `F0F06315DAD6D0CFB0E0A6634B0F3CD57D70BC4EC62558980B0BC55E446A638A`
+- Windows installer: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\Mr.Robot-Setup-0.3.6-x64.exe`
+  - Size: 97,788,841 bytes
+  - SHA-256: `5C309FA2B2D83D3A5BD1639EA9DDF049050CE4D34BB4B91B55CD4EEC63C1BD3A`
   - Authenticode: unsigned
-- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.4.apk`
-  - Size: 87,503,228 bytes
-  - SHA-256: `398B650CB2ABD9032951551F3C93BCF7604F83066518800DBEEFBF909FD48DAC`
+- Android APK: `C:\Team\_Nameless\취미\BOT\Mr.Robot\release\mobile\Mr.Robot-Mobile-0.3.6.apk`
+  - Size: 87,513,720 bytes
+  - SHA-256: `950230B6D77E156E66009B4973F343B71663761DC3DAA9556B7F6D761FF389B6`
   - Package: `com.mrrobot.mobile`
-  - Version: `0.3.4` / versionCode `9` / minSdk `24` / targetSdk `36`
+  - Version: `0.3.6` / versionCode `11` / minSdk `24` / targetSdk `36`
   - Permission: `android.permission.CAMERA`
   - APK Signature Scheme v2: verified
   - Signer certificate SHA-256: `EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6`
@@ -83,28 +85,28 @@ The 0.3.4 distribution supersedes older handoff entries. It keeps the fixed user
 
 - `npm run typecheck`: passed for shared, agent, web, and mobile.
 - `npm run build`: passed.
-- `npm test`: passed smoke, core hardening, storage recovery, executable QR security, plugin execution security, provider security, scheduler, AI loop, dependencies, routing, CLI, v0.2 compatibility, UI contract, logger, and voice suites. New coverage includes remote-link event visibility, management-mode reconnect suppression, QR review-before-connect, 6/12-digit parsing, and remote-handoff lifetime and invalidation.
-- `npm run test:leak`: passed; no leak detected.
+- `npm test`: passed smoke, core hardening, storage recovery, executable QR security, plugin execution security, provider security, scheduler, AI loop, dependencies, routing, CLI, v0.2 compatibility, UI contract, logger, and voice suites. New coverage includes execution-setting locks and complete rollback after an injected persistence failure.
+- `npm run test:leak`: passed; no leak detected, about 1.3 MB total measured heap drift.
 - Root full/production and mobile production `npm audit`: 0 vulnerabilities.
 - License scan: passed; deterministic notices include Sharp/libvips LGPL components and all production package notices.
-- The prior 0.3.1 responsive browser QA remains valid for unchanged surfaces; 0.3.4 additionally passed focused Remote Link live-address, profile connection-manager, two-stage mobile QR, unattended handoff, cloudflared bootstrap, plugin-refresh-loop, and desktop IPC UI contracts.
+- The prior responsive browser QA remains valid for unchanged surfaces; 0.3.6 additionally passed composer reasoning, execution-setting lock, mobile keyboard/modal avoidance, Quick Link recovery, and desktop IPC UI contracts.
 - Expo config and production export passed.
 - Electron NSIS installer, Android release build, APK metadata, v2 signature, artifact hashes, embedded notices, and brand assets were independently verified.
-- Temporary Android staging `C:\MR034` was removed after artifact verification, reclaiming 8,071,110,563 bytes.
+- Temporary Android staging `C:\MR036` was removed after artifact verification.
 - `git diff --check` passed; a repository-wide case-insensitive legacy-name scan returned no matches.
 
 ## Installation and upgrade notes
 
 - Windows is not Authenticode-signed. SmartScreen may require **More info → Run anyway**; verify the SHA-256 first.
-- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.4, and pair again. Android 0.3.0 through 0.3.3 can update directly because 0.3.4 uses the same signer and a higher versionCode.
+- Android 0.2.1 and older test APKs used the debug certificate. Android cannot update those in place with the dedicated 0.3 release key. Sync needed data, uninstall the old app once, install 0.3.6, and pair again. Android 0.3.0 through 0.3.4 can update directly because 0.3.6 uses the same signer and a higher versionCode.
 - Future 0.3.x APKs can update normally only while the same release signing key is preserved. Its password is protected for this Windows user with DPAPI and is not stored in the repository.
 - The Android release script refuses missing or partial signing state by default and verifies the official signer fingerprint after packaging. `-InitializeSigningKey` is reserved for intentionally creating a different signing identity.
 
 ## Honest external boundaries
 
-- Quick Link URLs are temporary and change after restart. The 0.3.4 plugin supports a stable user-owned Cloudflare named Tunnel; the PC, Mr.Robot and cloudflared still need to be running. The 24-hour handoff code does not keep a stopped tunnel or PC alive.
+- Quick Link URLs are temporary and change after restart. The 0.3.6 plugin supports a stable user-owned Cloudflare named Tunnel; the PC, Mr.Robot and cloudflared still need to be running. The 24-hour handoff code does not keep a stopped tunnel or PC alive.
 - Windows public-trust signing needs a user-owned code-signing certificate.
-- Windows React Native/NDK release builds require an ASCII-only and short checkout path. The 0.3.4 APK was built and verified from temporary staging `C:\MR034` because the canonical project path contains Korean characters and long CMake object paths can exceed Win32 limits; that staging directory has been removed.
+- Windows React Native/NDK release builds require an ASCII-only and short checkout path. The 0.3.6 APK was built and verified from temporary staging `C:\MR036` because the canonical project path contains Korean characters and long CMake object paths can exceed Win32 limits; that staging directory has been removed.
 - A real physical-phone pass is still recommended for vendor-specific background restrictions, camera pairing, keyboard behavior, and remote transfers.
 - Google Calendar cloud sync needs the user's OAuth client; local calendar and ICS work without it.
 - If Orca accepted creation of a worktree before cancellation, Mr.Robot stops the process tree but does not delete that worktree automatically because it may contain user data.

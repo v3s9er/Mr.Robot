@@ -1,15 +1,15 @@
 {
   "schema": "mr-robot-session-state/v3",
-  "createdAt": "2026-08-31T08:15:20+09:00",
+  "createdAt": "2026-08-31T22:45:19+09:00",
   "project": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot",
   "release": {
-    "version": "0.3.4",
+    "version": "0.3.6",
     "gitBranch": "main",
-    "gitTag": "v0.3.4",
+    "gitTag": "v0.3.6",
     "visibility": "public",
-    "externalRelease": "pending"
+    "externalRelease": "ready"
   },
-  "resumeObjective": "Publish and iterate from the verified 0.3.4 desktop/mobile ecosystem; preserve live Quick Link state, stable Remote PC management, two-stage mobile QR pairing, memory-only one-time remote handoff, remote-connection security ceilings, token accounting, Android signing identity, and token-free device transfers.",
+  "resumeObjective": "Publish and iterate from the verified 0.3.6 desktop/mobile ecosystem; preserve provider-aware composer reasoning, atomic execution-setting persistence, mobile keyboard avoidance, Quick Link recovery, remote-connection security ceilings, Android signing identity, and token-free device transfers.",
   "status": {
     "typecheck": "passed: shared, agent, web, mobile",
     "build": "passed: shared, agent, web, Electron NSIS, Android release",
@@ -17,7 +17,7 @@
     "leakTest": {
       "result": "passed: no leak detected"
     },
-    "browserQa": "0.3.1 responsive matrix retained; 0.3.4 focused live Remote Link address, management-mode reconnect suppression, QR review-before-connect, remote handoff, cloudflared bootstrap, plugin refresh, and desktop IPC contracts passed",
+    "browserQa": "responsive matrix retained; 0.3.6 composer reasoning, execution-setting lock, mobile keyboard/modal avoidance, Quick Link recovery, and desktop IPC contracts passed",
     "npmAudit": "passed: root full/production and mobile production audits report 0 vulnerabilities",
     "licenseAudit": "passed: 635 production packages, deterministic notices embedded in Electron and APK",
     "expo": "passed: final config and production export",
@@ -28,18 +28,18 @@
   },
   "artifacts": {
     "installer": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.4-x64.exe",
-      "sizeBytes": 97787680,
-      "sha256": "F0F06315DAD6D0CFB0E0A6634B0F3CD57D70BC4EC62558980B0BC55E446A638A",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\Mr.Robot-Setup-0.3.6-x64.exe",
+      "sizeBytes": 97788841,
+      "sha256": "5C309FA2B2D83D3A5BD1639EA9DDF049050CE4D34BB4B91B55CD4EEC63C1BD3A",
       "authenticode": "not-signed"
     },
     "androidApk": {
-      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.4.apk",
-      "sizeBytes": 87503228,
-      "sha256": "398B650CB2ABD9032951551F3C93BCF7604F83066518800DBEEFBF909FD48DAC",
+      "path": "C:\\Team\\_Nameless\\취미\\BOT\\Mr.Robot\\release\\mobile\\Mr.Robot-Mobile-0.3.6.apk",
+      "sizeBytes": 87513720,
+      "sha256": "950230B6D77E156E66009B4973F343B71663761DC3DAA9556B7F6D761FF389B6",
       "package": "com.mrrobot.mobile",
-      "versionName": "0.3.4",
-      "versionCode": 9,
+      "versionName": "0.3.6",
+      "versionCode": 11,
       "minSdk": 24,
       "targetSdk": 36,
       "permissions": [
@@ -59,15 +59,17 @@
     "ctfDockerImage": "mr-robot/ctf-toolbox:0.3.4",
     "runtimeConfig": "C:\\Users\\lrsze\\.mr-robot",
     "androidBuildStaging": {
-      "path": "C:\\MR034",
-      "removed": true,
-      "reclaimedBytes": 8071110563
+      "path": "C:\\MR036",
+      "removed": true
     }
   },
   "completed": [
     "desktop-standalone operation with optional phone and remote PCs",
     "conversation-scoped direct model or reusable multi-agent graph selection",
     "switchable provider models, reasoning effort, workspace, scenario, and access policy",
+    "provider-aware desktop and mobile composer reasoning controls with per-conversation persistence",
+    "atomic execution-setting save locks across model, preset, reasoning, workspace, and access before command dispatch",
+    "complete in-memory conversation rollback with sync metadata after persistence failure",
     "protected smart cascade, vote, sequential validation, hybrid council, and CTF presets",
     "editable compact nodes, directed edges, visual groups, meetings, votes, and validation judges",
     "shared byte-limited LRU context broker, provider cache prefixes, detailed usage metrics, and run budgets",
@@ -119,7 +121,7 @@
     "Google Calendar cloud sync requires the user's OAuth client; local calendar and ICS do not",
     "Android builds older than 0.3.0 used a debug certificate and require one uninstall before installing the dedicated release-signed APK",
     "the Android release key must be preserved for future in-place updates and is not stored in Git",
-    "Windows React Native/NDK release builds require a short ASCII-only checkout path; the 0.3.4 APK was built from temporary C:\\MR034 and that staging directory has been removed",
+    "Windows React Native/NDK release builds require a short ASCII-only checkout path; the 0.3.6 APK was built from temporary C:\\MR036 and that staging directory has been removed",
     "an Orca worktree accepted before cancellation is not automatically deleted because it may contain user data",
     "quality-per-token routing improves efficiency but cannot guarantee universally best answers"
   ],
