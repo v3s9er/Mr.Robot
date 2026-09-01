@@ -1,49 +1,61 @@
-# Mr.Robot 0.3.7 session handoff — 2026-09-01
+# Mr.Robot 0.3.8 session handoff — 2026-09-01
 
 ## Resume in one sentence
 
-Continue from the verified 0.3.7 Windows desktop release: upstream 0.3.6 model/reasoning, mobile keyboard, QR, and Quick Link behavior remain intact, while the new private work calendar is implemented, security-tested, installed, and loaded from DPAPI-protected derived state.
+Continue from commit `38c7deb`: Mr.Robot 0.3.8 is built, installed, and locally/publicly verified with hardened Cloudflare remote access, DPAPI-protected credentials, renderer secret isolation, scoped device capabilities, bounded model/file operations, and the 0.3.7 private-calendar behavior preserved.
 
-## Completed in 0.3.7
+## Completed in 0.3.8
 
-- Desktop and mobile display a real seven-column month calendar in `Asia/Seoul` while retaining ordinary calendar events and administrator schedules.
-- The PC administrator can select a macro-free `.xlsx` and provide a one-time row/group identifier. Import opens one file descriptor with read-only access, bounds the ZIP/XML input, rejects macros and external links, never evaluates formulas, and retains neither the workbook path nor the identifiers.
-- The workbook is never modified. Production-schema validation and encrypted import confirmed identical SHA-256, length, and last-write time on the local read-only source copy.
-- Only derived date, work status, workplace label, manually supplied address, and override data enter the private store. State is Windows DPAPI(CurrentUser) ciphertext under `~/.mr-robot/private/work-calendar/` and is excluded from Git and ordinary PC sync.
-- Sensitive replacement or deletion publishes the latest encrypted state as both primary and recovery copy, so removed NAVER credentials cannot return through corruption recovery.
-- Mobile devices need the separate, revocable `private-calendar` capability. Read-only devices can view but cannot mutate; update events contain only a revision and date range and go only to administrators or authorized devices. Capability or authentication loss immediately clears rendered private data and invalidates late responses from the old connection.
-- Weekends and Korean public holidays are evaluated as calendar dates in Seoul. The 2026 official table and later-year rules are effective-year-aware, so the new Labor Day and Constitution Day treatment does not change historical years.
-- Manual per-date values take precedence and can be removed to restore the imported, weekend, or holiday value.
-- NAVER access is opt-in. The fixed official API host receives addresses only for the live request; internal workplace labels become generic route names, and coordinates/distance/time are not cached or persisted.
-- Desktop, web, and mobile accept only the exact generated `nmap://route/public|walk|car` contract. If Windows has no app-scheme handler, desktop converts only that validated route to an exact `https://map.naver.com` directions path with generic names. Unknown or duplicated query keys, credentials, ports, fragments, invalid coordinates, changed names, and wrong app identifiers are rejected.
-- The PC UI can explicitly delete saved NAVER Client ID/Secret and consent. Device capability updates use an administrator-only atomic single-capability RPC to avoid stale-array permission races.
-- Network responses are streamed with a 1 MiB ceiling, already-cancelled requests make no fetch, and raw transport errors cannot echo a private geocoding URL.
-- Workbook filesystem failures cannot echo the private source path, invalid control characters are rejected, and unreferenced workplace addresses are pruned after reimport or override changes.
+- Public enrollment uses a separate cryptographically random, memory-only, one-use 12-digit handoff; the ordinary local PIN is rejected on the public endpoint.
+- Public WebSockets require a short-lived, source/host/principal-bound one-use ticket. Origin, authentication, connection, message, byte, in-flight RPC, and heartbeat limits are enforced, and revocation closes live sessions.
+- The Cloudflare Connector validates the exact Windows Authenticode publisher and runs from an app-generated local config containing only the validated public hostname to loopback Agent route plus a catch-all 404. Connector credentials are DPAPI-protected and never placed in process arguments or diagnostics.
+- The administrator secret is stored in a separate DPAPI envelope and is not returned to the Electron renderer. Saved remote-PC bearer tokens remain in the Electron main process, which injects authorization only for an exact registered origin.
+- MCP environment values are purpose-separated DPAPI ciphertext; legacy plaintext migrates before commands are exposed, and RPC responses reveal variable names only.
+- Codex, Claude, dependency, voice, and Connector child processes use explicit environment allowlists. Unsafe CLI flags are filtered; native runs have hard time and output bounds.
+- Dependency installers pin direct tool versions and voice-asset SHA-256 values, enforce TLS, verify downloads before use, and reject archive traversal, links, special files, excessive entries, and expansion bombs.
+- Remote HTTP/WSS requires authenticated HTTPS/WSS except for loopback or a transport proven to use the actual Tailscale adapter. Public peer fetches pin validated public DNS answers while preserving TLS hostname validation.
+- File/work transfers use narrow, memory-only, one-use grants plus capability, concurrency, rolling-byte, response-size, free-space, and shared-area limits.
+- REST and WebSocket model starts share one admission policy for permissions, concurrency, frequency, and bounded token accounting; cancellation and failures release admission state.
+- The encrypted private work calendar, bounded read-only XLSX import, Seoul holiday rules, strict NAVER routing, provider/model selection, reasoning controls, presets, mobile keyboard handling, QR flow, file transfer, work sync, MCP, voice, and CTF/Docker features remain available.
 
 ## Verification
 
-- `npm run typecheck`: shared, agent, web, and mobile passed.
-- `npm run build`: shared, agent, web production bundle passed.
-- `npm test`: all smoke, hardening, recovery, QR, calendar, plugin/provider, scheduler, AI, compatibility, UI, mobile privacy, logger, and voice suites passed.
-- `npm run test:leak`: passed after 600 plugin attach/detach cycles and WebSocket churn; no leak detected.
+- `npm run typecheck`, `npm run build`, and the complete functional/security suite passed. The UI contract was rerun successfully after the final wording correction.
+- Leak stress passed with no detected leak and 1.46 MiB measured drift.
 - Root and mobile production dependency audits report 0 vulnerabilities.
-- Deterministic third-party notices contain 636 production packages, including the new exact `fflate@0.8.2` entry.
-- The installed executable reports `0.3.7`, its health endpoint responds, and the live calendar plugin reports `0.3.7` with the encrypted work month configured.
-- Final repository scans contain no private workbook, internal link, real person/team/company identifier, NAVER secret, signing key, or DPAPI state.
+- Repository secret scan and diff check passed.
+- Desktop version `0.3.8.0` is installed.
+- Loopback and `robot.v3s9er.com` health requests returned 200. Unauthenticated status, foreign Origin, and unauthenticated public WebSocket attempts were rejected with 403, 403, and 401 respectively.
+- The live Connector used the generated local ingress config and did not expose its credential in process arguments.
+- Pairing credentials were rotated after installation; active device links are 0.
+- GitHub `v0.3.8` is public with EXE, APK, checksum, and source assets whose server-side digests match the local files. The same four artifacts and the separate one-use handoff note were verified in the owner's private Google Drive.
 
-## Artifacts
+## Verified artifacts
 
-- Windows x64 installer: `release/Mr.Robot-Setup-0.3.7-x64.exe`
-  - Size: 97,909,785 bytes
-  - SHA-256: `D9F2026D3F36A7EE96422B5110724A16FE760B20083F2C5C3991A4118964A042`
+- Windows x64 installer: `release/Mr.Robot-Setup-0.3.8-x64.exe`
+  - Size: 97,947,543 bytes
+  - SHA-256: `EC90B76D9A91B721B9AC987BF67C24282AA2C4E14DD86ACF55877C4F68F41C1C`
   - Authenticode: not signed
-- Checksum file: `release/SHA256SUMS-0.3.7.txt`
-- Android source: `0.3.7`, versionCode `12`, minSdk `24`, targetSdk `36`
-- Android APK: not produced on this workstation because the preserved 0.3.x release signing key is unavailable. Do not initialize a different key for an update build.
+- Android APK: `release/mobile/Mr.Robot-Mobile-0.3.8.apk`
+  - Size: 87,543,948 bytes
+  - SHA-256: `F86B434CC8E89D41E2B16ABA08C1F5178A064B6B75835C6AFB2811FAB3A2DFFF`
+  - versionName `0.3.8`, versionCode `13`
+  - Signer SHA-256: `EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6`
+  - APK Signature Scheme v2: verified
+- Source archive: `release/Mr.Robot-source-0.3.8.zip`
+  - Size: 1,118,426 bytes
+  - SHA-256: `16CFDE511ED3900C65DE3BD2CCEFEB6DB10DAAAA8E383C7109471C968DE8263B`
+
+## Remaining security boundaries
+
+- The Windows installer is not Authenticode-signed and may trigger SmartScreen. Verify its SHA-256 before installation.
+- Direct installer dependencies and downloaded assets are pinned, but transitive npm/pip dependencies are not independently hash-locked.
+- Native subscription CLIs are bounded by runtime, output, concurrency, and post-run accounting, but the provider does not expose an enforceable hard token ceiling for an individual run.
+- A DeepSeek key was pasted into chat and must be revoked and reissued by the user in the provider console; repository cleanup cannot invalidate it.
 
 ## Sensitive-state rules
 
-Never commit or log a workbook, internal Microsoft URL, row/group identifier, workplace/address value, provider key, pairing secret, NAVER credential, signing key, or DPAPI blob. Private runtime values stay outside the repository under the user's Windows profile. An internal Microsoft workbook must be downloaded by the already authenticated user and remains read-only to Mr.Robot.
+Never commit or publish provider keys, pairing credentials, handoff codes, Connector credentials, remote-PC bearer tokens, signing keys, DPAPI blobs, private workbook data, internal links, or workplace identifiers. Runtime secrets remain outside the repository and encrypted by the platform-specific secure store.
 
 ## Fast validation
 
@@ -55,5 +67,3 @@ npm run test:leak
 npm audit --omit=dev
 npm audit --omit=dev --prefix apps/mobile
 ```
-
-Build the Windows installer with `npm run build:installer`. Build Android only after restoring the existing official signing material, then run `scripts/build-mobile-release.ps1`; the script must verify the expected certificate before copying an APK into `release/mobile/`.
