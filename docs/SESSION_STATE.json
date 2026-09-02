@@ -3,29 +3,30 @@
   "updatedAt": "2026-09-02",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.0",
-    "releaseRef": "v0.4.0",
+    "version": "0.4.1",
+    "releaseRef": "v0.4.1",
     "gitBranch": "main",
     "state": "verified-release-ready"
   },
-  "resumeObjective": "Verify the final committed release, publish the exact installer, APK, source ZIP and checksum to GitHub, and upload the APK plus checksum to the owner Drive folder without runtime credentials.",
+  "resumeObjective": "Publish the exact verified 0.4.1 installer, source ZIP and checksum to GitHub without runtime credentials; Android remains on 0.4.0.",
   "status": {
     "typecheck": "passed",
     "build": "passed",
-    "tests": "passed: complete functional, security, responsive desktop, mobile keyboard, Cloudflare enrollment, storage rollback, and public-release suite",
+    "tests": "passed: complete functional, security, resource archiver, SSL scanner, plugin workbench, responsive desktop, mobile, storage rollback, and public-release suite",
     "leakTest": "passed: NO LEAK DETECTED; total drift 1463 KB",
     "npmAudit": "passed: root and mobile production dependency audits each found 0 vulnerabilities",
-    "repositoryIntegrity": "passed: public audit covered 214 tracked source files, reachable history, LFS pointers, and desktop stage",
-    "desktopInstall": "passed: installed 0.4.0.0 executable and app.asar match release/win-unpacked; local ping succeeded",
+    "repositoryIntegrity": "passed: public audit covered 238 tracked source files, reachable history, LFS pointers, and desktop stage",
+    "desktopInstall": "passed: installed 0.4.1.0 executable and app.asar match release/win-unpacked; local ping succeeded",
+    "sslComparison": "passed against official sslscan 2.2.2 on an isolated local TLS fixture: protocols and two TLS 1.2 ciphers matched; Mr.Robot quick used 4 connections versus 80",
     "android": "passed: versionCode 15, previous release signer continuity, and APK Signature Scheme v2 verified",
     "remoteBoundary": "passed live: v5 enrollment returned 200, issued device and Access credentials returned remote status 200 on robot.v3s9er.com, replay returned 409 PAIRING_CONSUMED, and the test link was revoked",
-    "distribution": "pending final GitHub Release and Google Drive upload"
+    "distribution": "pending final GitHub Release"
   },
   "artifacts": {
     "installer": {
-      "path": "release/Mr.Robot-Setup-0.4.0-x64.exe",
-      "sizeBytes": 96043757,
-      "sha256": "587E3D7E01E06A5764D9F0744436CB64C85E3DD4C66CD9C8B99A302EB71E8638",
+      "path": "release/Mr.Robot-Setup-0.4.1-x64.exe",
+      "sizeBytes": 96075374,
+      "sha256": "52CAE1CFFAC788EBED4E46DB191BE8523A2B39B05D268B6499F930253064D691",
       "authenticode": "not-signed"
     },
     "androidApk": {
@@ -38,7 +39,7 @@
       "signatureSchemeV2": "verified"
     },
     "sourceArchive": {
-      "path": "release/Mr.Robot-source-0.4.0.zip",
+      "path": "release/Mr.Robot-source-0.4.1.zip",
       "sizeBytes": null,
       "sha256": null,
       "state": "generated from the tagged commit during publication"
@@ -74,6 +75,8 @@
     "mobileSecretStorage": "one versioned per-PC SecureStore/Keystore bundle with legacy migration and rollback"
   },
   "security": {
+    "githubSecretScanning": "enabled",
+    "githubPushProtection": "enabled",
     "plaintextCredentialsInRepository": false,
     "runtimeSecretsPublished": false,
     "publicEnrollmentUsesLocalPin": false,
