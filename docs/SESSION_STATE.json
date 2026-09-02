@@ -1,129 +1,91 @@
 {
-  "schema": "mr-robot-session-state/v5",
-  "updatedAt": "2026-09-01",
+  "schema": "mr-robot-session-state/v6",
+  "updatedAt": "2026-09-02",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.3.9",
-    "codeBaselineCommit": "3101b27bdd78258fb547da37f5e23f59a912412e",
-    "releaseRef": "v0.3.9",
+    "version": "0.4.0",
+    "releaseRef": "v0.4.0",
     "gitBranch": "main",
-    "state": "verified-release-ready-distribution-pending"
+    "state": "verified-release-ready"
   },
-  "resumeObjective": "Create the public source ZIP and SHA256SUMS from the committed release state, then publish only the exact EXE, APK, source ZIP, and checksum to GitHub Release and owner-private Google Drive without runtime credentials.",
+  "resumeObjective": "Verify the final committed release, publish the exact installer, APK, source ZIP and checksum to GitHub, and upload the APK plus checksum to the owner Drive folder without runtime credentials.",
   "status": {
-    "typecheck": "passed after persistent and busy-safe execution-host switching",
-    "build": "passed; final Windows installer and update-compatible Android APK rebuilt",
-    "tests": "passed: complete functional/security suite plus desktop/mobile multi-PC persistence, race, busy-lock, and credential-isolation contracts",
-    "leakTest": "passed: NO LEAK DETECTED; total drift 1466 KB",
+    "typecheck": "passed",
+    "build": "passed",
+    "tests": "passed: complete functional, security, responsive desktop, mobile keyboard, Cloudflare enrollment, storage rollback, and public-release suite",
+    "leakTest": "passed: NO LEAK DETECTED; total drift 1463 KB",
     "npmAudit": "passed: root and mobile production dependency audits each found 0 vulnerabilities",
-    "repositoryIntegrity": "passed: public audit covered 214 source files, 22 LFS pointers, reachable history, and desktop stage; final source-archive command rechecks clean HEAD",
-    "desktopInstall": "passed: installed 0.3.9.0 executable and app.asar match release/win-unpacked; local ping succeeded",
-    "liveRemote": "passed after final install: anonymous Access blocking, exact service-token response, one-use ticket, authenticated external WSS/status RPC, and named-tunnel auto-start recovery",
-    "pairing": "no pairing secret, PIN, handoff code, device token, or Access credential may be recorded in this state file",
-    "distribution": "pending final GitHub Release and owner-private Google Drive upload"
+    "repositoryIntegrity": "passed: public audit covered 214 tracked source files, reachable history, LFS pointers, and desktop stage",
+    "desktopInstall": "passed: installed 0.4.0.0 executable and app.asar match release/win-unpacked; local ping succeeded",
+    "android": "passed: versionCode 15, previous release signer continuity, and APK Signature Scheme v2 verified",
+    "remoteBoundary": "passed live: v5 enrollment returned 200, issued device and Access credentials returned remote status 200 on robot.v3s9er.com, replay returned 409 PAIRING_CONSUMED, and the test link was revoked",
+    "distribution": "pending final GitHub Release and Google Drive upload"
   },
   "artifacts": {
     "installer": {
-      "path": "release/Mr.Robot-Setup-0.3.9-x64.exe",
-      "sizeBytes": 96036171,
-      "sha256": "4E652F32AB7ED00860D6C0C78C28DEF16553D5308AF82C7192D1FEBBFD41B84E",
-      "authenticode": "not-signed",
-      "state": "rebuilt-installed-and-verified"
+      "path": "release/Mr.Robot-Setup-0.4.0-x64.exe",
+      "sizeBytes": 96043757,
+      "sha256": "587E3D7E01E06A5764D9F0744436CB64C85E3DD4C66CD9C8B99A302EB71E8638",
+      "authenticode": "not-signed"
     },
     "androidApk": {
-      "path": "release/mobile/Mr.Robot-Mobile-0.3.9.apk",
-      "sizeBytes": 87558760,
-      "sha256": "C45AE3DFB93DD0CEF3ED6C6AF1B050EBD37E5A6835117E9D91994AAE1F3D0963",
-      "versionName": "0.3.9",
-      "versionCode": 14,
+      "path": "release/mobile/Mr.Robot-Mobile-0.4.0.apk",
+      "sizeBytes": 87579116,
+      "sha256": "7F11015348C96736ECB6EC70C22FE58E5C595D71DEF63FED129E0EE1034C54D9",
+      "versionName": "0.4.0",
+      "versionCode": 15,
       "certificateSha256": "EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6",
-      "signatureSchemeV2": "verified",
-      "state": "rebuilt-and-verified"
+      "signatureSchemeV2": "verified"
     },
     "sourceArchive": {
-      "path": "release/Mr.Robot-source-0.3.9.zip",
+      "path": "release/Mr.Robot-source-0.4.0.zip",
       "sizeBytes": null,
       "sha256": null,
-      "state": "generated after this state is committed; verify externally with SHA256SUMS-0.3.9.txt"
+      "state": "generated from the tagged commit during publication"
     }
   },
-  "completed": [
-    "removed any fixed mother-PC hierarchy; every PC is an independent execution host",
-    "retained PC1 and PC2 registrations side by side with independent device tokens and exact credential origins",
-    "added active execution-PC selection to desktop chat, desktop profile, and Android home",
-    "restored a valid last selected remote execution PC after desktop restart and failed safely to the local Agent when unavailable",
-    "blocked execution-PC switching and connection management while any run remains active",
-    "invalidated stale mobile connection generations before switching hosts to prevent old-PC reconnect races",
-    "kept desktop local standalone operation independent from all remote-link providers",
-    "hardened Cloudflare Named Tunnel start and auto-start with fail-closed Access verification",
-    "required anonymous blocking and exact service-token Agent responses for ping, WebSocket ticket, and pairing paths",
-    "kept remote-link as a default-off optional built-in plugin module rather than an independently installable package",
-    "kept Windows remote-link secrets in CurrentUser DPAPI and Android per-PC secrets in SecureStore/Keystore",
-    "added a public-release audit covering tracked sources, reachable Git history, LFS pointers, and desktop stage",
-    "blocked runtime configuration, plugin state, shared data, signing keys, and release secrets from public source archives"
-  ],
   "defaults": {
     "orcaEnabled": false,
     "tailscaleEnabled": false,
     "remoteLinkEnabled": false,
-    "remoteLinkPackaging": "built-in-optional-module-not-independent-installable-plugin",
     "desktopStandalone": true,
     "fixedMotherPc": false,
-    "privateCalendarSync": false,
-    "privateCalendarAiToolExposure": false
-  },
-  "multiDevice": {
-    "supportedTopology": "two or more independently registered PCs plus a mobile controller",
-    "activeExecutionHost": "user-selectable; one active host per controller connection",
-    "credentialIsolation": "per-PC device token and exact Cloudflare Access origin",
-    "switchSafety": "old connection generation, socket, and reconnect timer are invalidated before the new PC connects; switching is blocked while any run is active",
-    "restartBehavior": "restore a valid last remote PC; clear stale selection and fall back to local standalone on failure",
-    "remoteTopologyRequirement": "each remotely reachable PC uses a unique hostname and dedicated Tunnel"
+    "mobileVoiceEnabled": false
   },
   "remoteLink": {
     "pluginId": "remote-link",
-    "packaging": "built-in",
-    "enabledByDefault": false,
-    "independentlyInstallable": false,
+    "packaging": "built-in optional module",
     "providers": [
       "cloudflare-quick",
       "cloudflare-named"
     ],
-    "autoStartSupported": true,
-    "autoStartRequiresExplicitOptIn": true,
-    "startIsFailClosed": true,
-    "verificationContract": [
-      "anonymous ping cannot expose the exact Mr.Robot Agent response",
-      "anonymous WebSocket-ticket and pairing probes cannot expose exact Agent markers",
-      "service-token probes must reach the exact Agent response",
-      "a failed named-tunnel verification stops the connector"
-    ],
-    "liveReleaseGate": [
-      "external anonymous Access blocking",
-      "external service-token HTTP probes",
-      "authenticated one-use-ticket WSS connection and RPC",
-      "application restart and named-tunnel auto-start recovery"
-    ],
-    "liveReleaseGateStatus": "passed"
+    "namedTunnel": {
+      "exactOrigin": true,
+      "accessProtected": true,
+      "autoStartOptIn": true,
+      "failClosedVerification": true,
+      "oneUseHandoffMinutes": 10,
+      "bootstrapMaximumMinutes": 5,
+      "longCredentialsInQr": false,
+      "longCredentialsInRenderer": false
+    },
+    "multiPc": "each PC keeps an independent device token, exact Access origin, unique hostname and dedicated Tunnel",
+    "secretStorage": "Windows CurrentUser DPAPI with a remote-link-specific purpose; legacy provider-purpose values migrate in place",
+    "mobileSecretStorage": "one versioned per-PC SecureStore/Keystore bundle with legacy migration and rollback"
+  },
+  "security": {
+    "plaintextCredentialsInRepository": false,
+    "runtimeSecretsPublished": false,
+    "publicEnrollmentUsesLocalPin": false,
+    "publicEnrollmentReplayAllowed": false,
+    "publicWebSocketRequiresOneUseTicket": true,
+    "cloudflareAccessPolicy": "exact host; owner-email Allow and one exact service-token Service Auth; no Everyone or Bypass",
+    "paidCloudflareServicesRequired": false,
+    "windowsAuthenticode": "not configured; published SHA-256 verification required"
   },
   "knownExternalBoundaries": [
-    "The Windows installer is not Authenticode-signed and may trigger SmartScreen; verify its final published SHA-256 before installation.",
-    "Direct installer dependencies and downloaded assets are pinned, but transitive npm and pip dependencies are not independently hash-locked.",
-    "Native subscription CLIs do not expose an enforceable per-run provider token hard ceiling; Mr.Robot instead bounds time, output, concurrency, starts, and post-run accounting.",
-    "The DeepSeek key pasted into chat must be revoked and reissued by the user in the provider console."
-  ],
-  "security": {
-    "publicAudit": "passed; source-archive generation reruns it on a clean committed HEAD",
-    "plaintextCredentialsInRepository": false,
-    "rendererReceivesAdministratorSecret": false,
-    "rendererReceivesSavedRemotePcBearerToken": false,
-    "runtimeSecrets": "Windows CurrentUser DPAPI or Android SecureStore/Keystore outside the repository",
-    "pluginRuntimeSecretsPublished": false,
-    "publicEnrollmentUsesLocalPin": false,
-    "publicWebSocketRequiresOneUseTicket": true,
-    "cloudflareIngress": "validated public hostname to loopback Agent plus catch-all 404",
-    "cloudflareAccessPolicy": "exact host; owner-email Allow and exact service-token Service Auth; no Everyone or Bypass",
-    "paidCloudflareServicesRequired": false,
-    "windowsAuthenticode": "not configured; final checksum verification required"
-  }
+    "Cloudflare dashboard policy and DNS remain external state and must retain the documented fail-closed configuration.",
+    "The Windows installer is not Authenticode-signed and may trigger SmartScreen.",
+    "Any provider API key previously pasted into a chat must be revoked and reissued at the provider."
+  ]
 }
