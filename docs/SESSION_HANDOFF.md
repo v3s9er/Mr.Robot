@@ -1,10 +1,18 @@
-# Mr.Robot 0.4.2 session handoff — 2026-09-03
+# Mr.Robot 0.4.3 session handoff — 2026-09-03
 
 ## 한 문장 재개
 
-0.4.2는 사용자 소유·명시적 허가 대상만 다루는 저트래픽 보안 도구 3종을 `모의해킹` 카테고리와 독립 암호 포털에 추가한 릴리스입니다. 포털은 기본적으로 꺼져 있고, 네이티브 앱에서 정확한 도메인과 암호를 설정해야 열립니다.
+0.4.3은 개별 모델 호출의 보수적 토큰 추정 오차 때문에 정상 작업이 중단되던 문제를 고치고, 전체 실행·15분 누적 폭주 상한은 유지하면서 결과 품질을 우선하도록 조정한 안정화 릴리스입니다.
 
-## 0.4.2 핵심 변경
+## 0.4.3 핵심 변경
+
+- 개별 호출의 실제 사용량이 사전 추정치를 넘어도 전체 실행 예산 안이면 계속합니다. 전체 실행 예산을 넘으면 즉시 fail closed하고 보고된 초과량까지 15분 사용량 부채로 남깁니다.
+- 전역 10,000,000토큰/15분, 관리자 8,000,000토큰/15분, 연결 기기 500,000토큰/15분 상한과 동시 실행·시작 횟수 제한은 유지합니다.
+- 에이전트 프롬프트에 정상 범위의 토큰 절약보다 정확하고 완결된 결과를 우선하고, 이미 통과한 전체 회귀는 기반 변경이 없는 한 반복하지 않도록 명시했습니다.
+- 같은 요청의 직전 실행이 실패한 경우에만 화면 끝의 실패 pair를 새 시도로 교체합니다. 성공한 동일 요청과 다른 요청은 그대로 보존합니다.
+- 모바일은 상태 렌더 전에 발생할 수 있는 빠른 이중 탭을 동기 잠금으로 차단합니다.
+
+## 0.4.2에서 유지되는 기능
 
 - `Resource Archiver`: 제공된 HAR/본문을 우선 사용하고, 직접 수집은 명시적 승인 때만 제한된 GET으로 수행합니다. preview, 중복 제거, URL 재작성, SHA-256 manifest와 부분 실패 ZIP을 제공합니다.
 - `SSL/TLS Inspector`: `sslscan`을 호출하거나 소스를 포함하지 않은 독립 구현입니다. quick은 기본 4회 handshake, standard는 cipher 시험 최대 12회로 제한합니다.
@@ -25,25 +33,24 @@
 
 ## 검증 결과
 
-- `npm run typecheck`, `npm run build`, 전체 `npm test` 통과
-- Tool Portal 11/11, Runtime Observer 23/23, SSL/TLS Inspector 7/7, 포털 클라이언트 5/5 통과
-- `npm run test:leak`: `NO LEAK DETECTED`, total drift 1,468 KB
-- root와 mobile production dependency audit: 각각 0 vulnerabilities
-- 데스크톱·모바일 포털 UI와 접근성/반응형 검증 통과
+- 0.4.2 기준 전체 `npm test`, leak, dependency audit와 보안 도구 회귀 통과
+- 0.4.3 변경 경로의 Agent/Web/Mobile 타입 검사와 Agent/Web 빌드 통과
+- admission 정책 테스트에서 개별 추정 20 대비 실제 30토큰은 허용하고 전체 예산을 넘는 10,000,001토큰 보고는 차단·부채 처리됨을 확인
+- 데스크톱·모바일 UI 계약 테스트 통과
 - 공식 `sslscan` 2.2.2를 격리된 localhost fixture에서 새로 실행해 TLS 1.2/1.3, 인증서 주체, TLS 1.2 cipher 2개가 일치함을 확인
 - 같은 fixture의 TCP 연결 수: Mr.Robot quick 4, quick cache hit 0, deep 31, 공식 `sslscan` 80
-- Windows 설치본 ProductVersion 0.4.2.0 확인, build와 설치본 `app.asar` SHA-256 일치, 로컬 `/api/ping` 200 확인
+- Windows 설치본 ProductVersion 0.4.3.0 확인, build와 설치본 `app.asar` SHA-256 일치, 로컬 `/api/ping` 200 확인
 
 ## Windows 산출물
 
-- `release/Mr.Robot-Setup-0.4.2-x64.exe`
-  - 96,116,218 bytes
-  - SHA-256 `0B80297B0571FEB657E95814DD7DA3CEC7F970F14F459447443B6BA27428FEC9`
-  - ProductVersion 0.4.2.0, Authenticode 미서명
+- `release/Mr.Robot-Setup-0.4.3-x64.exe`
+  - 96,116,345 bytes
+  - SHA-256 `B4F1B80F1A389AB33EA484437B806B7DE2FD81C4D800E482510B10A91F4700FA`
+  - ProductVersion 0.4.3.0, Authenticode 미서명
 - build/설치본 `app.asar` SHA-256
-  - `DDFD11A1D7B640A772D8D44FD422762D6B7B6D1A900E8362D33375C6D970D802`
+  - `704A6AF0EE2B2FDF1507E0FDE115CE1F064F0854B342D85AD1DDD2729B68C24B`
 - Android는 기존 0.4.0 APK를 유지합니다.
-- Source ZIP과 `SHA256SUMS-0.4.2.txt`는 태그 커밋에서 생성해 GitHub Release에 첨부합니다.
+- Source ZIP과 `SHA256SUMS-0.4.3.txt`는 태그 커밋에서 생성해 GitHub Release에 첨부합니다.
 
 ## 외부 경계와 다음 설정
 

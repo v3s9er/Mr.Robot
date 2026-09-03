@@ -1,35 +1,35 @@
 {
-  "schema": "mr-robot-session-state/v7",
+  "schema": "mr-robot-session-state/v8",
   "updatedAt": "2026-09-03",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.2",
-    "releaseRef": "v0.4.2",
+    "version": "0.4.3",
+    "releaseRef": "v0.4.3",
     "gitBranch": "main",
     "state": "locally-installed; publication pending"
   },
-  "resumeObjective": "Publish the exact verified 0.4.2 installer, source ZIP and checksum to GitHub without runtime credentials; Android remains on 0.4.0.",
+  "resumeObjective": "Publish the exact verified 0.4.3 installer, source ZIP and checksum to GitHub without runtime credentials; Android remains on 0.4.0.",
   "status": {
     "typecheck": "passed",
     "build": "passed",
-    "tests": "passed: complete suite; Tool Portal 11/11, Runtime Observer 23/23, SSL/TLS Inspector 7/7, portal client 5/5",
-    "leakTest": "passed: NO LEAK DETECTED; total drift 1468 KB",
-    "npmAudit": "passed: root and mobile production dependency audits each found 0 vulnerabilities",
-    "repositoryIntegrity": "passed: public audit covered 262 source files and 28 tracked release pointers",
-    "desktopInstall": "passed: installed ProductVersion 0.4.2.0; installed app.asar matches release/win-unpacked; local /api/ping returned 200",
+    "tests": "passed: 0.4.2 complete suite baseline plus focused 0.4.3 admission, desktop UI and mobile UI contracts",
+    "leakTest": "0.4.2 baseline passed: NO LEAK DETECTED; not redundantly rerun for the focused 0.4.3 change",
+    "npmAudit": "0.4.2 baseline passed with 0 vulnerabilities; no dependency changed in 0.4.3",
+    "repositoryIntegrity": "passed: public audit covered 263 source files and 29 tracked release pointers",
+    "desktopInstall": "passed: installed ProductVersion 0.4.3.0; installed app.asar matches release/win-unpacked; local /api/ping returned 200",
     "browserQa": "passed: desktop and mobile portal flows, approval reset, UTF-8 mutation boundary, lazy asset isolation, console, overflow and responsive checks",
     "sslComparison": "passed against official sslscan 2.2.2 on an isolated localhost TLS fixture: protocols, subject and two TLS 1.2 ciphers matched; Mr.Robot quick used 4 connections versus 80",
     "distribution": "pending final GitHub Release"
   },
   "artifacts": {
     "installer": {
-      "path": "release/Mr.Robot-Setup-0.4.2-x64.exe",
-      "sizeBytes": 96116218,
-      "sha256": "0B80297B0571FEB657E95814DD7DA3CEC7F970F14F459447443B6BA27428FEC9",
+      "path": "release/Mr.Robot-Setup-0.4.3-x64.exe",
+      "sizeBytes": 96116345,
+      "sha256": "B4F1B80F1A389AB33EA484437B806B7DE2FD81C4D800E482510B10A91F4700FA",
       "authenticode": "not-signed"
     },
     "installedAppAsar": {
-      "sha256": "DDFD11A1D7B640A772D8D44FD422762D6B7B6D1A900E8362D33375C6D970D802",
+      "sha256": "704A6AF0EE2B2FDF1507E0FDE115CE1F064F0854B342D85AD1DDD2729B68C24B",
       "matchesBuild": true
     },
     "androidApk": {
@@ -37,7 +37,7 @@
       "state": "unchanged from 0.4.0"
     },
     "sourceArchive": {
-      "path": "release/Mr.Robot-source-0.4.2.zip",
+      "path": "release/Mr.Robot-source-0.4.3.zip",
       "sizeBytes": null,
       "sha256": null,
       "state": "generated from the tagged commit during publication"
@@ -72,6 +72,8 @@
     "authorizedTargetsOnly": true,
     "runtimeTarget": "exact HTTPS host on port 443",
     "runtimeCdpCaps": "256 KiB/frame, 4096 frames/session, 8 MiB/session, 64 pending commands, 512 runtime events",
+    "modelTokenAdmission": "per-call estimates control admission only; actual usage may use the held run allowance; whole-run overruns fail closed and remain 15-minute debt",
+    "modelTokenWindowCaps": "global 10000000, administrator 8000000, linked device 500000 per 15 minutes",
     "portalArtifactDownload": "same-origin, session-bound, request-proof-bound, one-use, 2 minute expiry, 16 MiB maximum",
     "windowsAuthenticode": "not configured; published SHA-256 verification required"
   },
