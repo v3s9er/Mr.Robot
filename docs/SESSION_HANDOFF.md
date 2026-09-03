@@ -1,10 +1,15 @@
-# Mr.Robot 0.4.0 session handoff — 2026-09-02
+# Mr.Robot 0.4.1 session handoff — 2026-09-02
 
 ## 한 문장 재개
 
-0.4.0은 데스크톱·모바일 반응형 UI, Cloudflare Access 기반 영구 원격 연결, 1회용 자동 모바일 등록, 다중 PC 전환과 자격증명 저장 복구를 함께 다듬은 보안·사용성 릴리스입니다. PC는 원격 플러그인 없이도 로컬 Agent로 독립 실행되고, 원격 기능은 사용자가 켠 경우에만 동작합니다.
+0.4.1은 0.4.0의 원격 연결·보안 경계를 유지하면서 데스크톱과 모바일 입력창 안에 대화별 권한·추론 드롭다운을 넣고, Android 키보드가 입력 커서를 가리는 문제를 실제 좌표 측정으로 보정한 사용성 릴리스입니다. PC는 원격 플러그인 없이도 로컬 Agent로 독립 실행되고, 원격 기능은 사용자가 켠 경우에만 동작합니다.
 
-## 0.4.0 핵심 변경
+## 0.4.1 핵심 변경
+
+- Windows와 Android 입력 카드 안에서 대화별 액세스 권한과 추론 강도를 드롭다운으로 바꿉니다. 작은 화면의 가로 추론 칩은 제거했습니다.
+- 실행 권한은 계속 `PC 전역 안전 모드 ∩ 연결 기기 상한 ∩ 대화 선택`으로 계산합니다. 모바일이 자신의 기기 상한을 올릴 수 없고, 상한보다 높은 항목은 잠금·안내됩니다.
+- Android는 키보드 상단과 composer의 실제 화면 좌표를 측정해 `adjustResize`가 누락한 겹침만 보정합니다. API 36 에뮬레이터에서 두 줄 입력·커서·전송 및 권한/추론 모달을 확인했습니다.
+- 현재 활성 휴대폰 링크 상한은 `작업 폴더 자동`으로 올렸습니다. `전체 허용`은 열지 않았고, 각 대화에서는 입력창 권한 드롭다운으로 같은 단계를 한 번 선택해야 합니다.
 
 - 좁은 창에서도 데스크톱 상단 컨트롤이 겹치지 않도록 우선순위별로 접히고, 프로필·대화 메뉴·프리셋·모델 선택과 모달의 클릭 경계를 정리했습니다.
 - Android 채팅은 소프트 키보드 높이와 safe area를 반영해 입력창과 최근 메시지가 가려지지 않으며, 긴 오류·주소·PC 카드가 작은 화면을 밀어내지 않습니다.
@@ -26,20 +31,20 @@
 - root와 mobile production dependency audit: 각 0 vulnerabilities
 - 공개 릴리스 감사: 추적 소스 214개와 추적 릴리스 pointer 전체 검사 통과
 - Windows 설치본을 실제 설치한 뒤 실행 파일과 `app.asar`가 build 산출물과 일치하고 로컬 `/api/ping` 성공
-- Android APK: package `com.mrrobot.mobile`, versionCode 15, 기존 공식 signer 연속성, APK Signature Scheme v2 확인
+- Android APK: package `com.mrrobot.mobile`, versionCode 16, 기존 공식 signer 연속성, APK Signature Scheme v2 확인
 - 실제 `robot.v3s9er.com`에서 익명 요청이 Cloudflare Access 앞단에서 차단되는 것을 확인
 - 실제 `robot.v3s9er.com`에서 v5 자동 등록 200, 발급된 기기·Access 자격으로 원격 상태 200, 같은 등록 QR 재사용 409 `PAIRING_CONSUMED`를 확인하고 시험 기기를 즉시 폐기
 
 ## 산출물
 
-- Windows x64: `release/Mr.Robot-Setup-0.4.0-x64.exe`
-  - 96,043,757 bytes
-  - SHA-256 `587E3D7E01E06A5764D9F0744436CB64C85E3DD4C66CD9C8B99A302EB71E8638`
-  - ProductVersion 0.4.0.0, Authenticode 미서명
-- Android: `release/mobile/Mr.Robot-Mobile-0.4.0.apk`
-  - 87,579,116 bytes
-  - SHA-256 `7F11015348C96736ECB6EC70C22FE58E5C595D71DEF63FED129E0EE1034C54D9`
-  - versionName 0.4.0, versionCode 15, APK Signature Scheme v2
+- Windows x64: `release/Mr.Robot-Setup-0.4.1-x64.exe`
+  - 96,044,735 bytes
+  - SHA-256 `DAADE9298CEFC6228950A29E93549671C3E692B67F265CDE6D53FAA29497F726`
+  - ProductVersion 0.4.1.0, Authenticode 미서명
+- Android: `release/mobile/Mr.Robot-Mobile-0.4.1.apk`
+  - 87,586,088 bytes
+  - SHA-256 `9484669D85064CD4DCDFAAFA4E9E37FE7A376BF12A38445E2B7A097E7EC53351`
+  - versionName 0.4.1, versionCode 16, APK Signature Scheme v2
   - signer certificate SHA-256 `EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6`
 - Source ZIP과 통합 checksum은 최종 공개 커밋에서 생성합니다.
 
