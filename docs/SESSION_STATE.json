@@ -1,49 +1,59 @@
 {
-  "schema": "mr-robot-session-state/v8",
-  "updatedAt": "2026-09-03",
+  "schema": "mr-robot-session-state/v9",
+  "updatedAt": "2026-09-04",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.3",
-    "releaseRef": "v0.4.3",
+    "version": "0.4.4",
+    "releaseRef": "v0.4.4",
     "gitBranch": "main",
-    "state": "locally-installed; publication pending"
+    "state": "verified and installed release candidate; publication pending"
   },
-  "resumeObjective": "Publish the exact verified 0.4.3 installer, source ZIP and checksum to GitHub without runtime credentials; Android remains on 0.4.0.",
+  "resumeObjective": "Rebuild and install the final 0.4.4 Windows installer, record exact hashes and sizes, then publish the installer, tagged source ZIP and checksum to GitHub without runtime credentials; Android remains on 0.4.0/versionCode 15.",
   "status": {
-    "typecheck": "passed",
-    "build": "passed",
-    "tests": "passed: 0.4.2 complete suite baseline plus focused 0.4.3 admission, desktop UI and mobile UI contracts",
-    "leakTest": "0.4.2 baseline passed: NO LEAK DETECTED; not redundantly rerun for the focused 0.4.3 change",
-    "npmAudit": "0.4.2 baseline passed with 0 vulnerabilities; no dependency changed in 0.4.3",
-    "repositoryIntegrity": "passed: public audit covered 263 source files and 29 tracked release pointers",
-    "desktopInstall": "passed: installed ProductVersion 0.4.3.0; installed app.asar matches release/win-unpacked; local /api/ping returned 200",
-    "browserQa": "passed: desktop and mobile portal flows, approval reset, UTF-8 mutation boundary, lazy asset isolation, console, overflow and responsive checks",
-    "sslComparison": "passed against official sslscan 2.2.2 on an isolated localhost TLS fixture: protocols, subject and two TLS 1.2 ciphers matched; Mr.Robot quick used 4 connections versus 80",
+    "typecheck": "focused Shared/Agent/Web/Mobile type checks passed before final release verification",
+    "build": "final Windows x64 installer rebuilt successfully from the verified 0.4.4 source",
+    "tests": "focused 0.4.4 adaptive/audit policy, usage accounting, provider stream, runtime observer, desktop/mobile/responsive UI and auth-boundary checks only; full historical regression intentionally not repeated",
+    "leakTest": "prior release baseline retained; final staged public audit required before publication",
+    "npmAudit": "prior dependency baseline retained; no broad redundant audit run requested",
+    "repositoryIntegrity": "final staged diff and public-source audit pending",
+    "desktopInstall": "installed ProductVersion 0.4.4.0; build and installed app.asar hashes match; loopback /api/ping returned HTTP 200",
+    "browserQa": "passed one focused real-screen check: token policy dropdown is beside permission controls and responsive layout remains usable",
     "distribution": "pending final GitHub Release"
   },
   "artifacts": {
     "installer": {
-      "path": "release/Mr.Robot-Setup-0.4.3-x64.exe",
-      "sizeBytes": 96116345,
-      "sha256": "B4F1B80F1A389AB33EA484437B806B7DE2FD81C4D800E482510B10A91F4700FA",
-      "authenticode": "not-signed"
+      "path": "release/Mr.Robot-Setup-0.4.4-x64.exe",
+      "sizeBytes": 96122658,
+      "sha256": "EDC5CE0AA2C84394945281ACB52491BFEB149BC6164273AF9D523F433876399E",
+      "productVersion": "0.4.4",
+      "installedProductVersion": "0.4.4.0",
+      "authenticode": "not-signed",
+      "state": "final rebuild complete and installed successfully"
     },
     "installedAppAsar": {
-      "sha256": "704A6AF0EE2B2FDF1507E0FDE115CE1F064F0854B342D85AD1DDD2729B68C24B",
-      "matchesBuild": true
+      "sha256": "4C3CB162DAC0072740BDA610D5F2B78CFB379A94B5B066BEE0454C9A290E6C5E",
+      "matchesBuild": true,
+      "state": "verified after installing 0.4.4"
     },
     "androidApk": {
       "path": "release/mobile/Mr.Robot-Mobile-0.4.0.apk",
+      "versionName": "0.4.0",
+      "versionCode": 15,
       "state": "unchanged from 0.4.0"
     },
     "sourceArchive": {
-      "path": "release/Mr.Robot-source-0.4.3.zip",
+      "path": "release/Mr.Robot-source-0.4.4.zip",
       "sizeBytes": null,
       "sha256": null,
       "state": "generated from the tagged commit during publication"
+    },
+    "checksum": {
+      "path": "release/SHA256SUMS-0.4.4.txt",
+      "state": "generated from final release artifacts during publication"
     }
   },
   "defaults": {
+    "conversationTokenPolicy": "adaptive",
     "toolPortalEnabled": false,
     "runtimePlaintextCapture": false,
     "runtimeMutation": false,
@@ -52,6 +62,32 @@
     "tailscaleEnabled": false,
     "remoteLinkEnabled": false,
     "desktopStandalone": true
+  },
+  "modelExecution": {
+    "adaptiveCallBudgets": {
+      "simple": 64000,
+      "standard": 192000,
+      "complex": 512000
+    },
+    "adaptiveAbsolutePerRunTokens": 8000000,
+    "adaptiveScaling": "request complexity, reasoning effort, input context, model scenario and completed tool progress",
+    "auditOnly": "no Mr.Robot cumulative token cutoff; embedded native-app local administrator only",
+    "forcedAdaptive": [
+      "remote or proxied clients",
+      "linked devices",
+      "REST runs",
+      "conversations imported by synchronization"
+    ],
+    "providerCallConcurrency": {
+      "global": 48,
+      "localAdministrator": 32,
+      "perLinkedDevice": 8
+    },
+    "parallelFailureHandling": "abort sibling calls, await all settlements, then release actual provider-call slots",
+    "usageMetrics": {
+      "providerReported": "actual input, output, reasoning and cache tokens; estimated cost remains based on provider-reported usage",
+      "accountedTokens": "separate conservative audit metric covering reservations, missing reports and partial usage from failed calls"
+    }
   },
   "toolPortal": {
     "routes": [
@@ -71,15 +107,19 @@
     "runtimeSecretsPublished": false,
     "authorizedTargetsOnly": true,
     "runtimeTarget": "exact HTTPS host on port 443",
-    "runtimeCdpCaps": "256 KiB/frame, 4096 frames/session, 8 MiB/session, 64 pending commands, 512 runtime events",
-    "modelTokenAdmission": "per-call estimates control admission only; actual usage may use the held run allowance; whole-run overruns fail closed and remain 15-minute debt",
-    "modelTokenWindowCaps": "global 10000000, administrator 8000000, linked device 500000 per 15 minutes",
+    "runtimeCdpCaps": "256 KiB/frame, 4096 frames/session, 8 MiB/session, 64 pending commands, 512 runtime events, bounded invalid binding calls",
+    "modelTokenAdmission": "adaptive quality-scaled budgets with an 8000000-token per-run absolute cap; audit-only removes only the Mr.Robot cumulative token cutoff",
+    "modelTokenWindowCaps": "removed; historical window usage is diagnostic rather than admission-blocking",
+    "auditOnlyBoundary": "embedded native-app local administrator with a short-lived one-use in-process-issued WebSocket proof; ordinary local browsers, loopback-Host rewriting proxies, remote, linked, REST and imported sync paths remain adaptive",
+    "auditOnlyRetainedCaps": "provider-call count and concurrency, run time, stream bytes/lines/buffer, transport size, start rate, tool steps, no-progress loops and user cancellation",
+    "providerStreamCaps": "10 minute host deadline, 8 MiB total, 65536 lines, 1 MiB line/buffer and 64 KiB error body",
     "portalArtifactDownload": "same-origin, session-bound, request-proof-bound, one-use, 2 minute expiry, 16 MiB maximum",
     "windowsAuthenticode": "not configured; published SHA-256 verification required"
   },
   "knownExternalBoundaries": [
     "The portal remains disabled until the owner configures an exact domain and password in the native app.",
     "The Windows installer is not Authenticode-signed and may trigger SmartScreen.",
+    "Provider account limits, prices and service-side request limits still apply in audit-only mode.",
     "A Content-Length-less runtime response may exceed the byte limit by one final delivered chunk before fail-closed termination.",
     "Browser cleanup does not yet use a Windows Job Object to reclaim an abnormal descendant process tree.",
     "Cloudflare dashboard policy and DNS remain external state and must retain the documented fail-closed configuration."
