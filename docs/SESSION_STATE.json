@@ -1,35 +1,37 @@
 {
-  "schema": "mr-robot-session-state/v10",
-  "updatedAt": "2026-09-05",
+  "schema": "mr-robot-session-state/v11",
+  "updatedAt": "2026-09-06",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.5",
-    "releaseRef": "v0.4.5",
+    "version": "0.4.7",
+    "releaseRef": "v0.4.7",
     "gitBranch": "main",
-    "state": "release verification; publication tracked on GitHub"
+    "state": "local desktop and Discord workspace deployed and verified; GitHub publication follows this commit"
   },
-  "resumeObjective": "Verify v0.4.5 release assets and the owner-issued Discord slash command; never publish runtime settings or the existing bot configuration.",
+  "resumeObjective": "Use ai_talk ticket panel; verify v0.4.7 GitHub assets if resuming. Never export runtime IDs, bot credentials or thread mappings.",
   "changes": [
-    "Merged remote v0.4.4 adaptive/native audit policy with local composer and mobile IME fixes.",
-    "Unified desktop window/tray/web brand with mobile assets.",
-    "Added optional Discord Agent plugin, existing local bot GUI/news/KTX wrapper, owner-only slash commands, approval and cancellation.",
-    "Existing bot directory renamed locally; absolute paths and bot token deliberately omitted from this file."
+    "Per-question economy64k/standard256k/quality1M/adaptive/unlimited budgets with fresh allowance each question.",
+    "Desktop and mobile composer budget selectors; chat.start no generic RPC deadline.",
+    "Registered Discord server administrators only; per-user /robot access with explicit full confirmation, result and approval retrieval.",
+    "Discord host-scoped full override cannot be forged by remote JSON and cannot bypass global read-only; Discord uses audit-only token policy.",
+    "Discord ai_talk ticket panel: explicit title modal creates private user-owned thread; persistent panel/list/settings/stop/archive/confirmed delete.",
+    "Plain messages from session owner run through existing administrator-checked agent path; bounded per-thread queue and cancellation race guard.",
+    "PC administrator can provision ai_talk with admin-only visibility; no user tickets created automatically."
   ],
   "status": {
     "typecheck": "Shared, Agent, Web, Mobile passed",
-    "tests": "Historical regression pipeline plus remaining web/mobile checks passed after resolving merge contract conflicts; Discord mocked RPC integration passed",
-    "leakTest": "NO LEAK DETECTED: 600 plugin cycles, 80 WS cycles, 20 stream cycles; total drift 1477KB",
-    "discord": "Live Gateway ready, owner verified, slash ask/stop/new/status/models registered. User-triggered real model execution remains to be confirmed.",
-    "desktopInstall": "0.4.5 installed and launched; final release build must match installed app.asar",
-    "distribution": "GitHub v0.4.5 is the source of truth for uploaded assets"
+    "tests": "19 Python authorization/ticket tests; host session/Discord authority/integration/question-budget tests; Shared/Agent/Web/Mobile typechecks; core hardening, UI contracts and calendar release-version tests passed. Public release hygiene passed.",
+    "discord": "Gateway ready and idle; administrator-only bind/unbind/sessions commands verified via Discord API. Message Content enabled. ai_talk has administrator-only visibility with pinned ticket/list panel. Private runtime IDs omitted. No paid model task submitted.",
+    "desktopInstall": "0.4.7.0 installed and launched; installer retry exit0; installed app.asar matches final build and both Python modules match source.",
+    "distribution": "Windows EXE and source intended for GitHub v0.4.7; no new APK. Read GitHub release for publication confirmation."
   },
   "artifacts": {
-    "installer": "release/Mr.Robot-Setup-0.4.5-x64.exe",
-    "source": "release/Mr.Robot-source-0.4.5.zip",
-    "android": "Existing 0.4.1/versionCode16 source retained; no new APK release requested for this change"
+    "installer": "release/Mr.Robot-Setup-0.4.7-x64.exe",
+    "android": "Mobile source budget UI updated; no new APK built",
+    "source": "release/Mr.Robot-source-0.4.7.zip"
   },
   "security": {
-    "discord": "No public port. Ask-scoped ephemeral device credential retained in Node host only; disable/revoke cancels owned runs. Application owner only. Ephemeral replies are not end-to-end encrypted.",
+    "discord": "No public port. Device credential retained by Node host only. Registered server administrator role revalidated per request and during runs. Per-user approvals/results. PC global read-only remains authoritative.",
     "publication": "Only generic adapter source is bundled. Existing bot token, config, logs, databases and runtime credentials excluded."
   }
 }
