@@ -1,67 +1,35 @@
 {
-  "schema": "mr-robot-session-state/v9",
-  "updatedAt": "2026-09-04",
+  "schema": "mr-robot-session-state/v10",
+  "updatedAt": "2026-09-05",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.4",
-    "releaseRef": "pending-v0.4.4",
-    "gitBranch": "integration/v0.4.4-native",
-    "state": "integration-and-verification-in-progress"
+    "version": "0.4.5",
+    "releaseRef": "v0.4.5",
+    "gitBranch": "main",
+    "state": "release verification; publication tracked on GitHub"
   },
-  "resumeObjective": "Finish the verified 0.4.4 Windows build, install it locally, and publish source and release assets without runtime credentials.",
+  "resumeObjective": "Verify v0.4.5 release assets and the owner-issued Discord slash command; never publish runtime settings or the existing bot configuration.",
+  "changes": [
+    "Merged remote v0.4.4 adaptive/native audit policy with local composer and mobile IME fixes.",
+    "Unified desktop window/tray/web brand with mobile assets.",
+    "Added optional Discord Agent plugin, existing local bot GUI/news/KTX wrapper, owner-only slash commands, approval and cancellation.",
+    "Existing bot directory renamed locally; absolute paths and bot token deliberately omitted from this file."
+  ],
   "status": {
-    "typecheck": "pending",
-    "build": "pending",
-    "tests": "pending",
-    "leakTest": "pending",
-    "npmAudit": "pending",
-    "repositoryIntegrity": "pending",
-    "desktopInstall": "pending",
-    "distribution": "pending GitHub publication"
+    "typecheck": "Shared, Agent, Web, Mobile passed",
+    "tests": "Historical regression pipeline plus remaining web/mobile checks passed after resolving merge contract conflicts; Discord mocked RPC integration passed",
+    "leakTest": "NO LEAK DETECTED: 600 plugin cycles, 80 WS cycles, 20 stream cycles; total drift 1477KB",
+    "discord": "Live Gateway ready, owner verified, slash ask/stop/new/status/models registered. User-triggered real model execution remains to be confirmed.",
+    "desktopInstall": "0.4.5 installed and launched; final release build must match installed app.asar",
+    "distribution": "GitHub v0.4.5 is the source of truth for uploaded assets"
   },
   "artifacts": {
-    "installer": {
-      "path": "release/Mr.Robot-Setup-0.4.4-x64.exe",
-      "sizeBytes": null,
-      "sha256": null,
-      "authenticode": "not-signed"
-    },
-    "androidApk": {
-      "path": "release/mobile/Mr.Robot-Mobile-0.4.1.apk",
-      "sizeBytes": 87586088,
-      "sha256": "9484669D85064CD4DCDFAAFA4E9E37FE7A376BF12A38445E2B7A097E7EC53351",
-      "versionName": "0.4.1",
-      "versionCode": 16,
-      "state": "unchanged in the 0.4.4 Windows release"
-    },
-    "sourceArchive": {
-      "path": "release/Mr.Robot-source-0.4.4.zip",
-      "sizeBytes": null,
-      "sha256": null,
-      "state": "generated from the final tag during publication"
-    }
-  },
-  "defaults": {
-    "toolPortalEnabled": false,
-    "runtimePlaintextCapture": false,
-    "runtimeMutation": false,
-    "resourceNetworkFetch": false,
-    "orcaEnabled": false,
-    "tailscaleEnabled": false,
-    "remoteLinkEnabled": false,
-    "desktopStandalone": true
+    "installer": "release/Mr.Robot-Setup-0.4.5-x64.exe",
+    "source": "release/Mr.Robot-source-0.4.5.zip",
+    "android": "Existing 0.4.1/versionCode16 source retained; no new APK release requested for this change"
   },
   "security": {
-    "plaintextCredentialsInRepository": false,
-    "runtimeSecretsPublished": false,
-    "authorizedTargetsOnly": true,
-    "modelTokenWindowCaps": "global 10000000, administrator 8000000, linked device 500000 per 15 minutes",
-    "windowsAuthenticode": "not configured; published SHA-256 verification required"
-  },
-  "knownExternalBoundaries": [
-    "The portal remains disabled until the owner configures an exact domain and password in the native app.",
-    "The Windows installer is not Authenticode-signed and may trigger SmartScreen.",
-    "Cloudflare dashboard policy and DNS remain external state and must retain the documented fail-closed configuration.",
-    "A GitHub PAT exposed in another local repository remote URL must be revoked and removed independently."
-  ]
+    "discord": "No public port. Ask-scoped ephemeral device credential retained in Node host only; disable/revoke cancels owned runs. Application owner only. Ephemeral replies are not end-to-end encrypted.",
+    "publication": "Only generic adapter source is bundled. Existing bot token, config, logs, databases and runtime credentials excluded."
+  }
 }
