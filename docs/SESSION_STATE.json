@@ -1,31 +1,29 @@
 {
-  "schema": "mr-robot-session-state/v6",
-  "updatedAt": "2026-09-02",
+  "schema": "mr-robot-session-state/v9",
+  "updatedAt": "2026-09-04",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.1",
-    "releaseRef": "pending-v0.4.1",
-    "gitBranch": "main",
-    "state": "verified-local-release-ready"
+    "version": "0.4.4",
+    "releaseRef": "pending-v0.4.4",
+    "gitBranch": "integration/v0.4.4-native",
+    "state": "integration-and-verification-in-progress"
   },
-  "resumeObjective": "If the owner requests publication, commit the verified 0.4.1 source and publish the exact installer, APK and checksum without runtime credentials.",
+  "resumeObjective": "Finish the verified 0.4.4 Windows build, install it locally, and publish source and release assets without runtime credentials.",
   "status": {
-    "typecheck": "passed",
-    "build": "passed",
-    "tests": "passed: uninterrupted complete functional, security, responsive desktop, mobile keyboard, permission-cap, Cloudflare enrollment, storage rollback, and public-release suite",
-    "leakTest": "passed: NO LEAK DETECTED; total drift 1463 KB",
-    "npmAudit": "passed: root and mobile production dependency audits each found 0 vulnerabilities",
-    "repositoryIntegrity": "passed: public audit covered 217 source files, reachable history, LFS pointers, and desktop stage",
-    "desktopInstall": "passed: installer exit 0, installed 0.4.1 executable, local ping, normal and 900x700 composer layout verified; app left running",
-    "android": "passed: versionCode 16, previous release signer continuity, APK Signature Scheme v2, release launch, portrait multi-line keyboard and dropdown UI verified on API 36 emulator",
-    "remoteBoundary": "passed live: v5 enrollment returned 200, issued device and Access credentials returned remote status 200 on robot.v3s9er.com, replay returned 409 PAIRING_CONSUMED, and the test link was revoked",
-    "distribution": "not requested in this turn; verified local artifacts and checksum are ready"
+    "typecheck": "pending",
+    "build": "pending",
+    "tests": "pending",
+    "leakTest": "pending",
+    "npmAudit": "pending",
+    "repositoryIntegrity": "pending",
+    "desktopInstall": "pending",
+    "distribution": "pending GitHub publication"
   },
   "artifacts": {
     "installer": {
-      "path": "release/Mr.Robot-Setup-0.4.1-x64.exe",
-      "sizeBytes": 96044735,
-      "sha256": "DAADE9298CEFC6228950A29E93549671C3E692B67F265CDE6D53FAA29497F726",
+      "path": "release/Mr.Robot-Setup-0.4.4-x64.exe",
+      "sizeBytes": null,
+      "sha256": null,
       "authenticode": "not-signed"
     },
     "androidApk": {
@@ -34,58 +32,36 @@
       "sha256": "9484669D85064CD4DCDFAAFA4E9E37FE7A376BF12A38445E2B7A097E7EC53351",
       "versionName": "0.4.1",
       "versionCode": 16,
-      "certificateSha256": "EB782D956DABCA784D9E0AFC152BF7061ACE72CE805215E3C6502AAE72E1A0E6",
-      "signatureSchemeV2": "verified"
+      "state": "unchanged in the 0.4.4 Windows release"
     },
     "sourceArchive": {
-      "path": "release/Mr.Robot-source-0.4.1.zip",
+      "path": "release/Mr.Robot-source-0.4.4.zip",
       "sizeBytes": null,
       "sha256": null,
-      "state": "generated from the tagged commit during publication"
+      "state": "generated from the final tag during publication"
     }
   },
   "defaults": {
+    "toolPortalEnabled": false,
+    "runtimePlaintextCapture": false,
+    "runtimeMutation": false,
+    "resourceNetworkFetch": false,
     "orcaEnabled": false,
     "tailscaleEnabled": false,
     "remoteLinkEnabled": false,
-    "desktopStandalone": true,
-    "fixedMotherPc": false,
-    "mobileVoiceEnabled": false
-  },
-  "remoteLink": {
-    "pluginId": "remote-link",
-    "packaging": "built-in optional module",
-    "providers": [
-      "cloudflare-quick",
-      "cloudflare-named"
-    ],
-    "namedTunnel": {
-      "exactOrigin": true,
-      "accessProtected": true,
-      "autoStartOptIn": true,
-      "failClosedVerification": true,
-      "oneUseHandoffMinutes": 10,
-      "bootstrapMaximumMinutes": 5,
-      "longCredentialsInQr": false,
-      "longCredentialsInRenderer": false
-    },
-    "multiPc": "each PC keeps an independent device token, exact Access origin, unique hostname and dedicated Tunnel",
-    "secretStorage": "Windows CurrentUser DPAPI with a remote-link-specific purpose; legacy provider-purpose values migrate in place",
-    "mobileSecretStorage": "one versioned per-PC SecureStore/Keystore bundle with legacy migration and rollback"
+    "desktopStandalone": true
   },
   "security": {
     "plaintextCredentialsInRepository": false,
     "runtimeSecretsPublished": false,
-    "publicEnrollmentUsesLocalPin": false,
-    "publicEnrollmentReplayAllowed": false,
-    "publicWebSocketRequiresOneUseTicket": true,
-    "cloudflareAccessPolicy": "exact host; owner-email Allow and one exact service-token Service Auth; no Everyone or Bypass",
-    "paidCloudflareServicesRequired": false,
+    "authorizedTargetsOnly": true,
+    "modelTokenWindowCaps": "global 10000000, administrator 8000000, linked device 500000 per 15 minutes",
     "windowsAuthenticode": "not configured; published SHA-256 verification required"
   },
   "knownExternalBoundaries": [
-    "Cloudflare dashboard policy and DNS remain external state and must retain the documented fail-closed configuration.",
+    "The portal remains disabled until the owner configures an exact domain and password in the native app.",
     "The Windows installer is not Authenticode-signed and may trigger SmartScreen.",
-    "Any provider API key previously pasted into a chat must be revoked and reissued at the provider."
+    "Cloudflare dashboard policy and DNS remain external state and must retain the documented fail-closed configuration.",
+    "A GitHub PAT exposed in another local repository remote URL must be revoked and removed independently."
   ]
 }
