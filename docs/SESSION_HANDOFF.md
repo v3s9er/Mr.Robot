@@ -1,6 +1,46 @@
-# Mr.Robot 0.4.7 session handoff — 2026-09-06
+# Mr.Robot 0.4.11 session handoff — 2026-09-06
+
+## Current 0.4.11
+
+Read RELEASE_NOTES_0.4.11.md and PUBLIC_RELEASE_AUDIT_0.4.11.md first.
+Adds exact live allow_ai ticket gating without widening existing admin-only use.
+PC/APK rebuilt as 0.4.11 (Android code 19). User authorized public GitHub release;
+no Drive upload requested in this turn. Existing user roles/config remain private
+and unchanged. Earlier 0.4.8–0.4.10 notes below describe local work before this
+consolidated release. Remote login/native-phone QA limitations remain.
+
+## Current 0.4.10
+
+Read RELEASE_NOTES_0.4.10.md first. Desktop/mobile compact composer and More
+settings sheet implemented together with Discord Agent 1.4.0 model ceilings.
+No real user limits changed, no bot-access widening, no external publication.
+Desktop browser fixture tested at 1100/390px; native phone verification pending.
+EXE/APK version 0.4.10, Android code 18. Prior remote tunnel/login blocker remains.
+
+## Latest local work: 0.4.9
+
+Discord Agent 1.4.0 follow-up: `/robot model-limit user ceiling` adds persisted
+guild/user model ceilings (spark/mini/luna/terra/sol/astra; show/unlimited).
+Existing server-admin-only access changes and bot use retained. Exact model IDs,
+catalog/settings/default/direct execution checks, host pre-provider-call guard;
+Discord cannot inherit PC routing presets. See integrations/discordbot/README.md
+for policy and native-CLI/PC-full-access limitations. No external publication.
+
+Read `RELEASE_NOTES_0.4.9.md` first. Composer controls deduplicated; optical-QR file-only AES-GCM channel added to Agent and mobile. EXE/APK built locally, desktop updated. No GitHub/Drive publication. Real-phone verification outstanding. Production remote address still fails verification (authenticated HTTP 530 observed); Cloudflare dashboard login required. Do not disable Access or claim remote/E2EE end-to-end production validation. File PSK channel does not encrypt chat/command RPC and has no forward secrecy. Previous Discord standalone work retained.
+
+## Discord 독립 플러그인 (로컬 0.4.8 추가 변경)
+
+Discord Agent 1.3.0은 standalone(연결 config.json만 읽는 독립 discord.py 클라이언트)과 legacy(기존 시큐리티봇 단일 클라이언트 호환) 모드로 분리했습니다. 새 설정은 standalone, 과거 설정은 기능 손실 방지를 위해 legacy로 해석합니다. 독립 모드는 기존 bot/client.py, main.py, GUI/뉴스/KTX에 의존하지 않습니다. standalone.py에는 연결정보 읽기, 계정별 OS 임대 잠금과 기존 봇 IPC 포트 충돌 차단이 있습니다. 기존 소스를 호출하는 부분은 legacy_adapter.py에만 있습니다. 이 두 파일과 requirements.txt도 설치본에 포함합니다. 다른 PC의 같은 토큰 실행은 감지하지 못하며, legacy에서 연결 중지는 여전히 함께 실행한 기존 봇도 종료합니다.
+
+검증: Python 37 tests, Agent/Web typecheck, Discord host/session/authority 회귀 테스트, UI contract 통과. 0.4.8 Windows 재빌드·설치 후 standalone 전환, Gateway ready / busy false / error 없음 확인. 실제 두 번째 실행은 duplicate 코드로 차단했습니다. 설치된 ASAR 및 Python 모듈 4개 해시 일치. 기존 연결 config.json은 읽기만 하며 변경하지 않았습니다. GitHub 공개 버전은 여전히 0.4.7이며 이번 요청에서 업로드하지 않습니다. 토큰·개인 경로·서버 ID는 공개 문서에 기록하지 않습니다.
+
+## 0.4.8 로컬 적용
+
+최근 Discord 티켓 메시지 아래로 중지/모델/권한 메뉴를 이동하고 이전 컴포넌트와 View만 정리합니다. `/robot controls`, `/robot model`, 공급자별 모델 발견/페이지/추론 선택을 추가했습니다. 기존 티켓 1개의 최근 봇 메시지에도 메뉴를 반영했으며 내용은 유지했습니다. Windows 0.4.8.0 설치·실행, ASAR 및 두 Python 모듈 소스 일치, Gateway ready, 모델 목록 실제 조회, Python 29개/호스트 Discord·세션·예산/타입/UI·버전 테스트 통과. 이전 허용 서버 핫픽스도 이번 설치본에 포함됐습니다. GitHub는 0.4.7 게시 상태이며 0.4.8 또는 APK를 게시한 것으로 간주하지 마세요.
 
 ## 0.4.7 재개 지점
+
+2026-09-06 로컬 후속 수정: Discord Python 브리지가 뉴스 봇의 단일 server_name 대신 호스트의 로컬 allowedGuildIds를 읽고 가입 서버와 교집합으로 권한을 검사합니다. 사용자가 요청한 추가 서버만 로컬 목록에 등록했으며 기존 서버/뉴스 설정은 유지했습니다. 설치된 unpacked bridge.py에도 핫픽스를 적용했습니다. 이 후속 수정은 아직 새 설치본/GitHub 릴리스에 반영되지 않았습니다. 다음 배포 시 포함하세요. 권한 파일 손상/명시적 빈 목록/등록 회수/복수 서버 테스트 포함 Python 24개 통과. 실제 서버 ID와 백업은 사용자 홈의 비공개 저장소에만 있습니다.
 
 Discord 티켓 작업실을 추가했습니다. ai_talk 채널의 [티켓 열기]에서 제목을 제출하면 개인 비공개 스레드가 생기며, 생성한 서버 관리자만 일반 채팅으로 작업하고 모델·추론·권한·보관·삭제를 관리합니다. 사용자 요청 없이 개인 티켓을 자동 생성하지 않습니다. PC의 Discord 플러그인에서 ai_talk 채널·패널 설치도 가능합니다. 모든 채널/사용자 ID와 매핑은 로컬 플러그인 저장소에만 있습니다. [0.4.7 릴리스 노트](RELEASE_NOTES_0.4.7.md)를 우선 읽으세요. 아래는 이전 버전의 역사 기록입니다.
 

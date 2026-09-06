@@ -3,12 +3,12 @@
   "updatedAt": "2026-09-06",
   "project": "Mr.Robot repository root",
   "release": {
-    "version": "0.4.7",
-    "releaseRef": "v0.4.7",
+    "version": "0.4.11",
+    "releaseRef": "v0.4.11",
     "gitBranch": "main",
-    "state": "local desktop and Discord workspace deployed and verified; GitHub publication follows this commit"
+    "state": "Consolidated 0.4.11 prepared for user-authorized GitHub publication; see release notes and audit"
   },
-  "resumeObjective": "Use ai_talk ticket panel; verify v0.4.7 GitHub assets if resuming. Never export runtime IDs, bot credentials or thread mappings.",
+  "resumeObjective": "Read RELEASE_NOTES_0.4.11.md and PUBLIC_RELEASE_AUDIT_0.4.11.md. Consolidated UI, file-only encryption, independent Discord plugin/model ceilings and allow_ai ticket checks. PC 0.4.11 installed, Discord ready. Remote verification/native phone QA remain unresolved. No real user roles or model limits assigned.",
   "changes": [
     "Per-question economy64k/standard256k/quality1M/adaptive/unlimited budgets with fresh allowance each question.",
     "Desktop and mobile composer budget selectors; chat.start no generic RPC deadline.",
@@ -20,18 +20,23 @@
   ],
   "status": {
     "typecheck": "Shared, Agent, Web, Mobile passed",
-    "tests": "19 Python authorization/ticket tests; host session/Discord authority/integration/question-budget tests; Shared/Agent/Web/Mobile typechecks; core hardening, UI contracts and calendar release-version tests passed. Public release hygiene passed.",
-    "discord": "Gateway ready and idle; administrator-only bind/unbind/sessions commands verified via Discord API. Message Content enabled. ai_talk has administrator-only visibility with pinned ticket/list panel. Private runtime IDs omitted. No paid model task submitted.",
-    "desktopInstall": "0.4.7.0 installed and launched; installer retry exit0; installed app.asar matches final build and both Python modules match source.",
-    "distribution": "Windows EXE and source intended for GitHub v0.4.7; no new APK. Read GitHub release for publication confirmation."
+    "tests": "Python47, full npm test, secure-file/model-policy focused tests, all platform typechecks, EXE/APK builds, public/history/local-credential audits passed",
+    "discord": "Standalone mode Gateway ready, busy false, no error; reads existing connection config only. Live duplicate launch rejected. Existing tickets and authorization state preserved.",
+    "desktopInstall": "0.4.11 installed; ASAR equals packaged build, Discord standalone ready with no active task",
+    "distribution": "0.4.10 Windows EXE and signed APK local only. No GitHub/Drive upload.",
+    "remote": "Not verified: authenticated HTTP 530 observed; Cloudflare dashboard logged out",
+    "secureFiles": "File-only PSK AES-GCM, not entire-agent E2EE; no forward secrecy or independent audit; real phone test pending"
   },
   "artifacts": {
-    "installer": "release/Mr.Robot-Setup-0.4.7-x64.exe",
-    "android": "Mobile source budget UI updated; no new APK built",
-    "source": "release/Mr.Robot-source-0.4.7.zip"
+    "installer": "release/Mr.Robot-Setup-0.4.11-x64.exe",
+    "android": "release/mobile/Mr.Robot-Mobile-0.4.11.apk",
+    "source": "release/Mr.Robot-source-0.4.11.zip"
   },
   "security": {
     "discord": "No public port. Device credential retained by Node host only. Registered server administrator role revalidated per request and during runs. Per-user approvals/results. PC global read-only remains authoritative.",
     "publication": "Only generic adapter source is bundled. Existing bot token, config, logs, databases and runtime credentials excluded."
-  }
+  },
+  "localVersion": "0.4.11",
+  "latestNotes": "docs/RELEASE_NOTES_0.4.11.md",
+  "latestWork": "Discord Agent 1.4.1 allow_ai ticket gating; consolidated UI/model-policy/file-encryption release; public source/history/local-credential and license review; native phone QA pending"
 }
